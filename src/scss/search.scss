@@ -32,8 +32,10 @@
     border: 1px solid $borderColor;
     background-color: $blackBackground;
   }
+}
 
-  @media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) {
+  .search {
     font-size: 1.2rem;
     .search__text {
       img {

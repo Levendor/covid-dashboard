@@ -13,7 +13,7 @@ module.exports = {
     publicPath: '',
     path: path.resolve(__dirname, './covid-dashboard'),
     filename: './[name].bundle.js',
-    assetModuleFilename: 'assets/icon/[name][ext]',
+    assetModuleFilename: 'assets/*/[name][ext]',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -33,10 +33,10 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
-        // {
-        //   from: './src/assets/img/',
-        //   to: path.resolve(__dirname, './covid-dashboard/assets/img/'),
-        // },
+        {
+          from: './src/assets/img/',
+          to: path.resolve(__dirname, './covid-dashboard/assets/img/'),
+        },
         {
           from: './src/assets/icon/',
           to: path.resolve(__dirname, './covid-dashboard/assets/icon/'),
