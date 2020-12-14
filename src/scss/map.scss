@@ -1,0 +1,32 @@
+.map {
+  height: calc(100% - 2.9rem);
+  width: 100%;
+}
+
+.map-tooltip {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  border-radius: 0;
+  opacity: 1 !important;
+
+
+  height: 7rem;
+  width: 15rem;
+
+  box-shadow: 5px 5px 3px -3px rgba(120,120,120,.3);
+  color: $fontColorGray;
+  background-color: $elementBackgroundColor;
+  border: 1px solid $borderColor;
+
+  .map-popup__country {
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  &::before {
+    margin: 0;
+    border-color: transparent;
+    background-color: transparent;
+  }
+}
