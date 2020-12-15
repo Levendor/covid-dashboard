@@ -33,12 +33,25 @@ body {
   border: 1px solid $borderColor;
 }
 
-.cases_digits {
+.hidden {
+  display: none !important;
+}
+
+.fullScreen {
+  width: 100%;
+  column-gap: 0;
+}
+
+.no-width {
+  min-width: 0;
+}
+
+.cases-digits {
   color: red;
 }
-.deaths_digits {
+.deaths-digits {
   color: white;
 }
-.recovered_digits {
+.recovered-digits {
   color: green;
 }

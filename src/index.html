@@ -25,14 +25,14 @@
     </header>
 
     <main class="main">
-      <div class="container">
+      <div id="container" class="container">
 
         <div class="left-column">
-          
+          <div id="listExpand" class="expand"></div>
+
           <div class="search border">
-            <div id="listExpand" class="expand"></div>
             <span class="search__text"><img src="./assets/icon/loupe.png" alt="search-logo"> Search a country</span>
-            <input id="search" class="search__input" placeholder="...start typing" type="text">
+            <input id="search" class="search__input" placeholder="search" type="text" autocomplete="off">
           </div>
 
           <div class="list-container">
@@ -48,6 +48,7 @@
 
         <div class="map-container">
           <div id="mapExpand" class="expand"></div>
+
           <div id="mapBox" class="map border">
           </div>
           <div id="mapSwitcher" class="switcher border">
@@ -72,15 +73,15 @@
                 </span>
                 <span class="table__cases">
                   Cases:
-                  <span class="cases_digits">70,111,812</span>
+                  <span class="cases-digits">70,111,812</span>
                 </span>
                 <span class="table__deaths">
                   Deaths:
-                  <span class="deaths_digits">1,587,991</span>
+                  <span class="deaths-digits">1,587,991</span>
                 </span>
                 <span class="table__recovered">
                   Recovered:
-                  <span class="recovered_digits">45,058,775</span>
+                  <span class="recovered-digits">45,058,775</span>
                 </span>
               </div>
             </div>
@@ -93,7 +94,7 @@
           <div class="chart-container">
             <div id="chartExpand" class="expand"></div>
             <div id="chartBox" class="chartBox border">
-  
+
             </div>
             <div id="chartSwitcher" class="switcher border">
               <div class="switcher__arrow-container_left"></div>

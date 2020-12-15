@@ -18,7 +18,7 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: path.resolve(__dirname, './covid-dashboard'),
+    contentBase: path.resolve(__dirname, './covid-dashboard/'),
     open: true,
     compress: true,
     hot: true,
@@ -34,12 +34,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: './src/assets/img/',
-          to: path.resolve(__dirname, './covid-dashboard/assets/img/'),
-        },
-        {
-          from: './src/assets/icon/',
-          to: path.resolve(__dirname, './covid-dashboard/assets/icon/'),
+          from: './src/assets/',
+          to: path.resolve(__dirname, './covid-dashboard/assets/'),
         },
       ],
     }),

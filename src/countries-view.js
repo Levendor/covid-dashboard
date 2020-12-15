@@ -200,23 +200,26 @@ const countries = function generateCountries() {
   const arr = [];
   for (let i = 0; i < 195; i++) {
     const countryName = countriesList[i].slice(0, -4);
+
     const totalCases = Math.round(1000 + Math.random() * 20000);
     const totalDeaths = Math.round(100 + Math.random() * 2000);
     const totalRecovered = Math.round(1000 + Math.random() * 15000);
-    const totalCasesPerHundreds = Math.round(0.01 + Math.random() * 0.20);
-    const totalDeathsPerHundreds = Math.round(0.001 + Math.random() * 0.02);
-    const totalRecoveredPerHundreds = Math.round(0.01 + Math.random() * 0.15);
+    const totalCasesPerHundreds = Math.round(1000 + Math.random() * 20000);
+    const totalDeathsPerHundreds = Math.round(100 + Math.random() * 2000);
+    const totalRecoveredPerHundreds = Math.round(1000 + Math.random() * 15000);
+
     const lastCases = Math.round(10 + Math.random() * 200);
     const lastDeaths = Math.round(1 + Math.random() * 20);
     const lastRecovered = Math.round(10 + Math.random() * 150);
-    const lastCasesPerHundreds = Math.round(0.0001 + Math.random() * 0.0020);
-    const lastDeathsPerHundreds = Math.round(0.00001 + Math.random() * 0.0002);
-    const lastRecoveredPerHundreds = Math.round(0.0001 + Math.random() * 0.0015);
+    const lastCasesPerHundreds = Math.round(10 + Math.random() * 200);
+    const lastDeathsPerHundreds = Math.round(1 + Math.random() * 20);
+    const lastRecoveredPerHundreds = Math.round(10 + Math.random() * 150);
+
     const coordinates = [
       Math.round(-90 + Math.random() * 180),
       Math.round(-180 + Math.random() * 360),
     ];
-    const flagPath = `./assets/img/flags/${countriesList[i]};`;
+    const flagPath = `./assets/img/flags/${countriesList[i]}`;
     const country = {
       countryName,
       coordinates,

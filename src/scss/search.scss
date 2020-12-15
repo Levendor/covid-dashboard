@@ -34,7 +34,19 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1002px) {
+  .search {
+    font-size: 1.4rem;
+    .search__text {
+      img {
+        height: 1.4rem;
+        margin-right: 0.7rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
   .search {
     font-size: 1.2rem;
     .search__text {

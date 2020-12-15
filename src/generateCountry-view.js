@@ -2,7 +2,10 @@ export default function generateCountry(item, index) {
   const number = document.createElement('span');
   number.textContent = item.index[index];
   number.classList.add('country-list__digits');
-  number.classList.add('cases_digits');
+
+  if (index.includes('ases')) number.classList.add('cases-digits');
+  else if (index.includes('eaths')) number.classList.add('deaths-digits');
+  else if (index.includes('ecovered')) number.classList.add('recovered-digits');
 
   const flag = document.createElement('img');
   flag.src = item.flagPath;

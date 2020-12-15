@@ -1,13 +1,13 @@
 import generateCountry from './generateCountry-view';
 
 export default class List {
-  constructor(listContainer, countriesList) {
+  constructor(countriesList, listContainer) {
     this.list = listContainer;
     this.data = countriesList;
   }
 
   filterCountries(str) {
-    return this.data.filter((item) => item.countryName.startsWith(str));
+    return this.data.filter((item) => item.countryName.toLowerCase().startsWith(str));
   }
 
   sortCountries(index, str) {
@@ -18,6 +18,8 @@ export default class List {
   }
 
   renderCountryList(index, str = '') {
+    this.list.innerHTML = '';
+
     const fragment = document.createDocumentFragment();
 
     const sortedCountriesList = this.sortCountries(index, str);
