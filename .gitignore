@@ -1,4 +1,3 @@
 node_modules
 dist
-/src/assets/img/flags/
-/src/assets/icon/flags/
+src/assets/img/flags/

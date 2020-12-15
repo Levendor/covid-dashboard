@@ -6,8 +6,8 @@
   left: 100%;
   transform: translate(-50%, -50%);
 
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.7rem;
+  height: 1.7rem;
 
   border-radius: 50%;
   border: 1px solid $borderColor;
@@ -18,17 +18,31 @@
   background-size: contain;
 
   z-index: 500;
+
+  &:hover {
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &:active {
+    width: 1.7rem;
+    height: 1.7rem;
+    background-image: url(../assets/icon/collapse.png);
+  }
+}
+
+.expanded {
+  background-image: url(../assets/icon/collapse.png);
+
+  &:active {
+    background-image: url(../assets/icon/expand.png);
+  }
 }
 
 .left-column:hover {
   .expand {
   visibility: visible;
-  }
-}
-
-.left-column:active {
-  .expand {
-    background-image: url(../assets/icon/collapse.png);
   }
 }
 
@@ -38,32 +52,14 @@
   }
 }
 
-.map-container:active {
-  .expand {
-    background-image: url(../assets/icon/collapse.png);
-  }
-}
-
 .table-container:hover {
   .expand {
   visibility: visible;
   }
 }
 
-.table-container:active {
-  .expand {
-    background-image: url(../assets/icon/collapse.png);
-  }
-}
-
 .chart-container:hover {
   .expand {
   visibility: visible;
-  }
-}
-
-.chart-container:active {
-  .expand {
-    background-image: url(../assets/icon/collapse.png);
   }
 }
