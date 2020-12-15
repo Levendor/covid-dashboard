@@ -68,7 +68,7 @@ class Covid19 {
                             country: element.country,
                             iso3: element.countryInfo.iso3,
                             flag: element.countryInfo.flag,
-                            countryСenterСoordinates: `${element.countryInfo.lat},${element.countryInfo.long}`,
+                            countryСenterСoordinates: [element.countryInfo.lat,element.countryInfo.long],
                             totalCases: element.cases,
                             totalDeaths: element.deaths,
                             totalRecovery: element.recovered,
