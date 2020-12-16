@@ -55,3 +55,10 @@ body {
 .recovered-digits {
   color: green;
 }
+
+.waiting {
+  background-image: url(../assets/img/loading.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}

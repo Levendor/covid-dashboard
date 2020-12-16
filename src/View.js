@@ -113,5 +113,9 @@ export default class View {
     viewChart.renderChart();
     viewChart.getCountry(Math.floor(Math.random() * 195));
     viewChart.updateChart();
+
+    [this.list, this.map, this.table, this.chart].forEach((item) => {
+      item.classList.remove('waiting');
+    });
   }
 }
