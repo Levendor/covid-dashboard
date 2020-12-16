@@ -1,6 +1,7 @@
 import countries from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
+import Map from './Map-view';
 import ViewChart from './viewChart-view';
 import Expand from './Expand-view';
 
@@ -42,6 +43,10 @@ export default class View {
     const viewSearch = new Search(
       this.search,
       this.list,
+    );
+
+    const viewMap = new Map(
+      this.map,
     );
 
     const viewChart = new ViewChart(
@@ -109,6 +114,9 @@ export default class View {
     });
 
     viewList.renderCountryList(index);
+
+    viewMap.initialize();
+    viewMap.renderMap();
 
     viewChart.renderChart();
     viewChart.getCountry(Math.floor(Math.random() * 195));

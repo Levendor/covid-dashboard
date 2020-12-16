@@ -2,7 +2,7 @@
 @import "main";
 @import "header";
 @import "footer";
-@import "scrollbar.scss";
+@import "scrollbar";
 
 * {
   box-sizing: border-box;
@@ -29,7 +29,8 @@ body {
 }
 
 .border {
-  background-color: $elementBackgroundColor;
+  // перебить стили leaflet.js
+  background-color: $elementBackgroundColor !important;
   border: 1px solid $borderColor;
 }
 
