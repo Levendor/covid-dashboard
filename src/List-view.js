@@ -1,9 +1,9 @@
-import generateCountry from './generateCountry-view';
+import generateListCountry from './generateListCountry-view';
 
 export default class List {
-  constructor(countriesList, listContainer) {
+  constructor(countries, listContainer) {
+    this.data = countries;
     this.list = listContainer;
-    this.data = countriesList;
   }
 
   filterCountries(str) {
@@ -25,7 +25,7 @@ export default class List {
     const sortedCountriesList = this.sortCountries(index, str);
 
     sortedCountriesList.forEach((item) => {
-      fragment.append(generateCountry(item, index));
+      fragment.append(generateListCountry(item, index));
     });
 
     this.list.append(fragment);

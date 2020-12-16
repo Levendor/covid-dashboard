@@ -1,3 +1,4 @@
 node_modules
 dist
 src/assets/img/flags/
+.vscode/settings.json

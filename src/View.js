@@ -1,6 +1,7 @@
 import countries from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
+import ViewChart from './viewChart-view';
 import Expand from './Expand-view';
 
 export default class View {
@@ -41,6 +42,11 @@ export default class View {
     const viewSearch = new Search(
       this.search,
       this.list,
+    );
+
+    const viewChart = new ViewChart(
+      countries,
+      this.chart,
     );
 
     const viewListExpand = new Expand(
@@ -95,6 +101,7 @@ export default class View {
         viewMapExpand.elementToCollapse,
         viewTableExpand.siblingElementToCollapse,
       );
+      viewChart.resizeChart();
     });
 
     viewSearch.search.addEventListener('input', () => {
@@ -102,5 +109,9 @@ export default class View {
     });
 
     viewList.renderCountryList(index);
+
+    viewChart.renderChart();
+    viewChart.getCountry(Math.floor(Math.random() * 195));
+    viewChart.updateChart();
   }
 }
