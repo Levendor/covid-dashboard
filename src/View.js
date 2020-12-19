@@ -19,6 +19,7 @@ export default class View {
     tableExpand,
     chartExpand,
   ) {
+    this.data = countries;
     this.container = container;
     this.list = list;
     this.search = search;
@@ -33,10 +34,11 @@ export default class View {
   }
 
   initialize() {
-    const index = 'totalCases';
+    this.country = this.getCountry(Math.floor(Math.random() * 195));
+    this.index = this.country.index[getIndex()].id;
 
     const viewList = new List(
-      countries,
+      this.data,
       this.list,
     );
 
@@ -46,11 +48,12 @@ export default class View {
     );
 
     const viewMap = new Map(
+      this.data,
       this.map,
     );
 
     const viewChart = new ViewChart(
-      countries,
+      this.country,
       this.chart,
     );
 
@@ -110,20 +113,67 @@ export default class View {
     });
 
     viewSearch.search.addEventListener('input', () => {
-      viewList.renderCountryList(index, viewSearch.search.value.toLowerCase());
+      viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
     });
 
-    viewList.renderCountryList(index);
+    viewMapExpand.expandButton.addEventListener('click', openCloseWarning);
+    function openCloseWarning() {
+      const warn = document.createElement('span');
+      warn.textContent = 'Откройте и закройте\ndevTools\nесли карта выглядит\nнекорректно';
+      warn.className = 'warning';
+      viewMapExpand.expandButton.parentNode.append(warn);
+      viewMapExpand.expandButton.removeEventListener('click', openCloseWarning);
+      setTimeout(() => {
+        warn.remove();
+      }, 5000);
+    }
+
+    viewList.renderCountryList(this.index);
 
     viewMap.initialize();
-    viewMap.renderMap();
+    viewMap.renderMap(this.index);
 
-    viewChart.renderChart();
-    viewChart.getCountry(Math.floor(Math.random() * 195));
-    viewChart.updateChart();
+    viewChart.initialize();
+    viewChart.renderChart(this.index);
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');
     });
   }
+
+  getCountry(index) {
+    return this.data[index];
+  }
+}
+
+function getIndex() {
+  const indexNames = [
+    'Total cases',
+    'Total deaths',
+    'Total recovered',
+    'Cases per 100 thousand',
+    'Deaths per 100 thousand',
+    'Recovered per 100 thousand',
+    'Total cases in the last day',
+    'Total deaths in the last day',
+    'Total recovered in the last day',
+    'Cases per 100 thousand in the last day',
+    'Deaths per 100 thousand in the last day',
+    'Recovered per 100 thousand in the last day',
+  ];
+  const indexIDs = [
+    'totalCases',
+    'totalDeaths',
+    'totalRecovered',
+    'totalCasesPerHundreds',
+    'totalDeathsPerHundreds',
+    'totalRecoveredPerHundreds',
+    'lastCases',
+    'lastDeaths',
+    'lastRecovered',
+    'lastCasesPerHundreds',
+    'lastDeathsPerHundreds',
+    'lastRecoveredPerHundreds',
+  ];
+  return indexIDs[Math.floor(Math.random() * 12)];
 }

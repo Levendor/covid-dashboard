@@ -63,3 +63,13 @@ body {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+
+.warning {
+  position: absolute;
+  z-index: 1000;
+  color: white;
+  font-size: 2rem;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+}
