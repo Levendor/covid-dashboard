@@ -3,6 +3,8 @@ import List from './List-view';
 import Search from './Search-view';
 import ViewChart from './viewChart-view';
 import Expand from './Expand-view';
+import * as Keyboard from './keyboard';
+import './keyboard.css';
 
 export default class View {
   constructor(
@@ -105,7 +107,7 @@ export default class View {
     });
 
     viewSearch.search.addEventListener('input', () => {
-      viewList.renderCountryList(index, viewSearch.search.value.toLowerCase());
+      // viewList.renderCountryList(index, viewSearch.search.value.toLowerCase());
     });
 
     viewList.renderCountryList(index);
@@ -113,5 +115,8 @@ export default class View {
     viewChart.renderChart();
     viewChart.getCountry(Math.floor(Math.random() * 195));
     viewChart.updateChart();
+
+
+    Keyboard.screenKeyboard.init(index,viewSearch,viewList);
   }
 }
