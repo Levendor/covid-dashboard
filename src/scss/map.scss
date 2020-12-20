@@ -30,6 +30,97 @@
   }
 }
 
+.legend {
+  cursor: pointer !important;
+  width: 3.2rem;
+  height: 3.2rem;
+  background-color: $elementBackgroundColorLight;
+  background-image: url(../assets/icon/grayLegend.png);
+  background-position: center;
+  background-size: 2rem 2.5rem;
+  background-repeat: no-repeat;
+  border: 1px solid $borderColor;
+
+  .legend-box {
+    display: none;
+    flex-direction: column;
+    max-width: 15rem;
+    // width: 22rem;
+    // height: 41rem;
+    border: 1px solid $borderColor;
+    background-color: $elementBackgroundColorLight;
+
+    .legend-box-head {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      height: 3rem;
+      width: 100%;
+
+      .legend-box-title {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1.4rem;
+      }
+    }
+
+    .legend-box-body{
+      margin: 0.1rem;
+
+      .legend-box-index{
+        display: flex;
+        flex-direction: row;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0.5rem 1rem;
+      }
+
+      .legend-box-item {
+        display: flex;
+        flex-direction: row;
+        vertical-align: middle;
+        align-items: center;
+        width: 100%;
+        height: 2rem;
+        padding: 1rem 0;
+        padding-left: 1rem;
+
+        .legend-box-img-box{
+          display: flex;
+          justify-content: center;
+          width: 2rem;
+        }
+
+        .legend-box-item-text {
+          padding: 0 1rem;
+          line-height: 2rem;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    width: auto;
+    height: auto;
+
+    .legend-box {
+      display: flex;
+    }
+    // background-image: url(../assets/icon/blueLegend.png);
+  }
+}
+
+// .active-legend {
+//   background-color: #2493f2;
+//   background-image: url(../assets/icon/blackLegend.png);
+// }
+
 // перебить стили leaflet.js
 .zoom-control {
   border: 1px solid $borderColor !important;

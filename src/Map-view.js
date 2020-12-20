@@ -1,5 +1,4 @@
-// import countries from './countries-view';
-import L from './vendors/leaflet/leaflet';
+import Leaflet from './vendors/leaflet/leaflet';
 import './vendors/leaflet/leaflet.css';
 
 export default class Map {
@@ -17,37 +16,40 @@ export default class Map {
       attribution: '<a href="chartjs.org">Chart.js</a>',
       maxZoom: 5,
     };
-    this.layer = new L.TileLayer(this.layerSource, this.layerConfig);
+    this.layer = new Leaflet.TileLayer(this.layerSource, this.layerConfig);
     this.markers = [];
+    this.legend = new Leaflet.Control({ position: 'topleft' });
   }
 
   initialize() {
-    this.map = new L.Map(this.mapBox, this.mapConfig);
+    this.map = new Leaflet.Map(this.mapBox, this.mapConfig);
     this.map.addLayer(this.layer);
     this.map.zoomControl.setPosition('bottomright');
     this.map.zoomControl.getContainer().classList.add('zoom-control');
   }
 
   renderMap(index) {
+    this.legend.onAdd = () => legendOnAdd(index, this.data);
+    this.legend.addTo(this.map);
     this.markers.forEach((item) => item.remove());
-    const assignMarkerSize = this.getMarkerSize(index);
+    const assignMarkerSize = getMarkerSize(index, this.data);
     const indexTooltipClass = getIndexClass(index);
     this.data.forEach((item) => {
       const iconConfig = {
         iconUrl: getMarkerColor(index),
         className: assignMarkerSize(item.index[index].value),
       };
-      const icon = new L.Icon(iconConfig);
+      const icon = new Leaflet.Icon(iconConfig);
       const markerConfig = {
         clickable: false,
         draggable: false,
         icon,
       };
-      const marker = new L.Marker(item.coordinates, markerConfig);
+      const marker = new Leaflet.Marker(item.coordinates, markerConfig);
       const tooltipConfig = {
         className: 'map-tooltip',
       };
-      const tooltip = new L.Tooltip(tooltipConfig);
+      const tooltip = new Leaflet.Tooltip(tooltipConfig);
       tooltip.setContent(
         `<span class="map-popup__country">${item.countryName}</span>
         <br>${item.index[index].name}: <span class="${indexTooltipClass}">${item.index[index].value}</span>`,
@@ -58,36 +60,62 @@ export default class Map {
     });
   }
 
-  updateMap(index) {
-    const assignMarkerSize = this.getMarkerSize(index);
-    let indexTooltipClass = '';
-    if (index.name.includes('ases')) indexTooltipClass = 'cases-digits';
-    else if (index.name.includes('eaths')) indexTooltipClass = 'deaths-digits';
-    else if (index.name.includes('ecovered')) indexTooltipClass = 'recovered-digits';
-
-    this.markers.forEach((item) => {
-      const countryName = item.getTooltip()._content.match(/(?<=>).+(?=<)/)[0];
-      item.getTooltip().setContent(
-        `<span class="map-popup__country">${countryName}</span>
-        <br>Cases: <span class="${indexTooltipClass}">${index.value}</span>`,
-      );
-      item._icon.classList.remove(item.getIcon().options.className);
-      item._icon.classList.add(assignMarkerSize(index.value));
-    });
+  showLegend(index, array) {
+    const legendBox = document.createElement('div');
+    legendBox.className = 'legend-box';
+    legendBox.innerHTML = `
+    <div class="legend-box-head">
+      <span class="legend-box-title">Legend</span>
+      <div class="legend-box-close"></div>
+    </div>`;
+    const legendBoxBody = document.createElement('div');
+    legendBoxBody.className = 'legend-box-body';
+    const legendBoxIndex = document.createElement('span');
+    legendBoxIndex.className = 'legend-box-index';
+    legendBoxIndex.textContent = array[0].index[index].name;
+    for (let i = 0; i < 10; i++) {
+      const legendBoxItem = document.createElement('div');
+      legendBoxItem.classList = 'legend-box-item';
+      legendBoxItem.innerHTML = `
+      <img src="${getMarkerColor(index)}" alt="legend-icon" class="$iconSize${i}">
+      <span class="legend-box-item-text">${getLegendValues(index, array, i)}</span>
+      `;
+      legendBoxBody.append(legendBoxItem);
+    }
+    legendBox.append(legendBoxBody);
+    this.mapBox.append(legendBox);
+    this.legend.removeEventListener('click', this.showLegend);
+    this.legend.addEventListener('click', this.hideLegend);
   }
 
-  getMarkerSize(index) {
-    const arr = this.data.map((item) => item.index[index].value).sort((a, b) => a - b);
-    const min = Math.min(...arr);
-    const max = Math.max(...arr);
-    const step = (max - min) / 10;
-    return function assignMarkerSize(value) {
-      for (let i = 0; i < 9; i++) {
-        if (value < min + (i + 1) * step) return `iconSize${i}`;
-      }
-      return 'iconSize9';
-    };
+  hideLegend() {
+    this.mapBox.querySelector('.legend-box').remove();
+    this.legend.removeEventListener('click', this.hideLegend);
+    this.legend.addEventListener('click', this.showLegend);
   }
+}
+
+function getMarkerSize(index, array) {
+  const arr = array.map((item) => item.index[index].value).sort((a, b) => a - b);
+  const min = Math.min(...arr);
+  const max = Math.max(...arr);
+  const step = (max - min) / 10;
+  return function assignMarkerSize(value) {
+    for (let i = 0; i < 9; i++) {
+      if (value < min + (i + 1) * step) return `iconSize${i}`;
+    }
+    return 'iconSize9';
+  };
+}
+
+function getLegendValues(index, array, i) {
+  const arr = array.map((item) => item.index[index].value).sort((a, b) => a - b);
+  const min = Math.min(...arr);
+  const max = Math.max(...arr);
+  const step = (max - min) / 10;
+  if (i === 0) return `< ${(min + (i + 1) * step).toFixed(0)}`;
+  if (i === 9) return `> ${(min + (i) * step).toFixed(0)}`;
+  return `${(min + (i) * step).toFixed(0)} - ${(min + (i + 1) * step).toFixed(0)}`;
 }
 
 function getMarkerColor(index) {
@@ -104,4 +132,35 @@ function getIndexClass(index) {
   else if (index.includes('eaths')) indexTooltipClass = 'deaths-digits';
   else if (index.includes('ecovered')) indexTooltipClass = 'recovered-digits';
   return indexTooltipClass;
+}
+
+function legendOnAdd(index, array) {
+  const legend = document.createElement('div');
+  legend.className = 'legend';
+
+  const legendBox = document.createElement('div');
+  legendBox.className = 'legend-box';
+  legendBox.innerHTML = `
+  <div class="legend-box-head">
+    <span class="legend-box-title">Legend</span>
+  </div>`;
+  const legendBoxBody = document.createElement('div');
+  legendBoxBody.className = 'legend-box-body border';
+  const legendBoxIndex = document.createElement('span');
+  legendBoxIndex.className = 'legend-box-index';
+  legendBoxIndex.textContent = array[0].index[index].name;
+  legendBoxBody.append(legendBoxIndex);
+  for (let i = 9; i >= 0; i--) {
+    const legendBoxItem = document.createElement('div');
+    legendBoxItem.classList = 'legend-box-item';
+    legendBoxItem.innerHTML = `
+    <div class="legend-box-img-box"><img src="${getMarkerColor(index)}" alt="legend-icon" class="iconSize${i}"></div>
+    <span class="legend-box-item-text">${getLegendValues(index, array, i)}</span>
+    `;
+    legendBoxBody.append(legendBoxItem);
+  }
+  legendBox.append(legendBoxBody);
+  legend.append(legendBox);
+
+  return legend;
 }

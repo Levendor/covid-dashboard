@@ -95,6 +95,8 @@ export default class View {
         viewListExpand.elementToCollapse,
         viewTableExpand.elementToCollapse,
       );
+      const resizeEvent = new Event('resize');
+      window.dispatchEvent(resizeEvent);
     });
     viewTableExpand.expandButton.addEventListener('click', () => {
       viewTableExpand.expandCollapseElement(
@@ -116,22 +118,11 @@ export default class View {
       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
     });
 
-    viewMapExpand.expandButton.addEventListener('click', openCloseWarning);
-    function openCloseWarning() {
-      const warn = document.createElement('span');
-      warn.textContent = 'Откройте и закройте\ndevTools\nесли карта выглядит\nнекорректно';
-      warn.className = 'warning';
-      viewMapExpand.expandButton.parentNode.append(warn);
-      viewMapExpand.expandButton.removeEventListener('click', openCloseWarning);
-      setTimeout(() => {
-        warn.remove();
-      }, 5000);
-    }
-
     viewList.renderCountryList(this.index);
 
     viewMap.initialize();
     viewMap.renderMap(this.index);
+    // viewMap.legend.addEventListener('click', () => viewMap.showLegend(this.index, this.data));
 
     viewChart.initialize();
     viewChart.renderChart(this.index);

@@ -1,5 +1,9 @@
 import Chart from './vendors/chartjs/Chart.bundle.min';
-// import countries from './countries-view';
+import {
+  FULLSCREENASPECTRATIO,
+  NARROWSCREENASPECTRATIO,
+  WIDESCREENASPECTRATIO,
+} from './constants';
 
 export default class ViewChart {
   constructor(country, chartBox) {
@@ -15,7 +19,7 @@ export default class ViewChart {
           data: [],
           backgroundColor: '#ffff00',
           borderColor: '#ffff00',
-          borderWidth: 1,
+          borderWidth: 0,
           fill: false,
         }],
       },
@@ -53,8 +57,9 @@ export default class ViewChart {
               unit: 'month',
             },
             ticks: {
+              maxRotation: 0,
               callback: (value, index) => {
-                if (index % 3 === 2) return value;
+                if (index % 3 === 2) return value.slice(0, 3);
                 return null;
               },
             },
@@ -90,6 +95,7 @@ export default class ViewChart {
     this.chart = chart;
     chart.className = 'chart';
     Chart.defaults.global.defaultFontColor = '#bdbdbd';
+    Chart.defaults.global.defaultFontSize = 11;
     const vendorClassChart = new Chart(chart, this.chartConfig);
     this.vendorClass = vendorClassChart;
     this.chartBox.append(chart);
@@ -97,6 +103,7 @@ export default class ViewChart {
 
   renderChart(index) {
     this.chartConfig.type = getChartType(index);
+
     let value = 0;
     const arr = [];
     for (let i = 1; i < 329; i++) {
@@ -104,7 +111,8 @@ export default class ViewChart {
       do {
         label = `${Math.ceil(Math.random() * 12)}/${Math.ceil(Math.random() * 30)}/2020`;
       } while (arr.some((item) => item === label));
-      arr.push(new Date(label));
+      // arr.push(new Date(label));
+      arr.push(label);
 
       value += Math.round(-200 + Math.random() * 1000);
       const data = (this.chartConfig.type === 'bar')
@@ -113,16 +121,17 @@ export default class ViewChart {
       this.chartConfig.data.datasets[0].data.push(data);
     }
     this.chartConfig.data.labels.push(...arr);
-    this.chartConfig.data.labels.sort((a, b) => (a > b ? 1 : -1));
-    console.log(this.vendorClass);
+    // this.chartConfig.data.labels.sort((a, b) => (a > b ? 1 : -1));
   }
 
   resizeChart() {
-    const FULLSCREENASPECTRATIO = 2.4;
-    const RESTOREDASPECTRATIO = 1.1;
+    const currentAspectRatio = document.body.offsetWidth < 1024
+      ? NARROWSCREENASPECTRATIO
+      : WIDESCREENASPECTRATIO;
+
     if (this.vendorClass.aspectRatio !== FULLSCREENASPECTRATIO) {
       this.vendorClass.aspectRatio = FULLSCREENASPECTRATIO;
-    } else this.vendorClass.aspectRatio = RESTOREDASPECTRATIO;
+    } else this.vendorClass.aspectRatio = currentAspectRatio;
   }
 }
 
@@ -132,4 +141,3 @@ function getChartType(index) {
   else if (index.includes('last')) chartType = 'bar';
   return chartType;
 }
-/// 1222

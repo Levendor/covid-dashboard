@@ -1,6 +1,3 @@
-// import generateListCountry from './generateListCountry-view';
-// import countries from './countries-view';
-
 export default class List {
   constructor(countries, listContainer) {
     this.data = countries;
