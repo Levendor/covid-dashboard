@@ -66,7 +66,6 @@ export default class Table {
   }
 
   renderTable(country, index) {
-    console.log(country, index);
     this.tableFlag.style.backgroundImage = `url(${country.flagPath})`;
     this.tableRegion.textContent = country.countryName;
     this.cases.className = 'cases-digits';

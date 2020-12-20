@@ -1,12 +1,10 @@
-export default class List {
+import Observer from './Observer';
+
+export default class List extends Observer {
   constructor(countries, listContainer) {
+    super();
     this.data = countries;
     this.list = listContainer;
-    this.observers = [];
-  }
-
-  initialize(...observers) {
-    this.observers.push(...observers);
   }
 
   filterCountries(str) {
@@ -29,10 +27,8 @@ export default class List {
 
     sortedCountriesList.forEach((item) => {
       const countryElement = generateListCountry(item, index);
-      this.observers.forEach((observer) => {
-        countryElement.addEventListener('click', () => {
-          observer.broadcast(item, index);
-        });
+      countryElement.addEventListener('click', () => {
+        super.broadcast(item, index);
       });
       fragment.append(countryElement);
     });

@@ -6,11 +6,9 @@ import {
 } from './constants';
 
 export default class ViewChart {
-  constructor(country, chartBox) {
+  constructor(chartBox) {
     this.chartBox = chartBox;
     this.chart = null;
-    this.vendorClass = null;
-    this.country = country;
     this.chartConfig = { // chart options
       type: 'line',
       data: {
@@ -91,17 +89,18 @@ export default class ViewChart {
   }
 
   initialize() {
-    const chart = document.createElement('canvas');
-    this.chart = chart;
-    chart.className = 'chart';
+    const chartElement = document.createElement('canvas');
+    chartElement.className = 'chart';
     Chart.defaults.global.defaultFontColor = '#bdbdbd';
     Chart.defaults.global.defaultFontSize = 11;
-    const vendorClassChart = new Chart(chart, this.chartConfig);
-    this.vendorClass = vendorClassChart;
-    this.chartBox.append(chart);
+    const chart = new Chart(chartElement, this.chartConfig);
+    this.chart = chart;
+    this.chartBox.append(chartElement);
   }
 
-  renderChart(index) {
+  renderChart(country, index) {
+    this.chartConfig.data.datasets[0].data.length = 0;
+    this.chartConfig.data.labels.length = 0;
     this.chartConfig.type = getChartType(index);
 
     let value = 0;
@@ -117,11 +116,12 @@ export default class ViewChart {
       value += Math.round(-200 + Math.random() * 1000);
       const data = (this.chartConfig.type === 'bar')
         ? Math.round(Math.random() * 100000)
-        : this.country.index[index].value + value;
+        : country.index[index].value + value;
       this.chartConfig.data.datasets[0].data.push(data);
     }
     this.chartConfig.data.labels.push(...arr);
     // this.chartConfig.data.labels.sort((a, b) => (a > b ? 1 : -1));
+    this.chart.update();
   }
 
   resizeChart() {
@@ -129,9 +129,9 @@ export default class ViewChart {
       ? NARROWSCREENASPECTRATIO
       : WIDESCREENASPECTRATIO;
 
-    if (this.vendorClass.aspectRatio !== FULLSCREENASPECTRATIO) {
-      this.vendorClass.aspectRatio = FULLSCREENASPECTRATIO;
-    } else this.vendorClass.aspectRatio = currentAspectRatio;
+    if (this.chart.aspectRatio !== FULLSCREENASPECTRATIO) {
+      this.chart.aspectRatio = FULLSCREENASPECTRATIO;
+    } else this.chart.aspectRatio = currentAspectRatio;
   }
 }
 
