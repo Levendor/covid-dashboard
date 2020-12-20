@@ -1,8 +1,10 @@
+import Observer from './Observer';
 import Leaflet from './vendors/leaflet/leaflet';
 import './vendors/leaflet/leaflet.css';
 
-export default class Map {
+export default class Map extends Observer {
   constructor(countries, mapBox) {
+    super();
     this.data = countries;
     this.mapBox = mapBox;
     this.mapConfig = {
@@ -49,10 +51,13 @@ export default class Map {
       const tooltipConfig = {
         className: 'map-tooltip',
       };
+      marker.addEventListener('click', () => {
+        super.broadcast(item, index);
+      });
       const tooltip = new Leaflet.Tooltip(tooltipConfig);
       tooltip.setContent(
-        `<span class="map-popup__country">${item.countryName}</span>
-        <br>${item.index[index].name}: <span class="${indexTooltipClass}">${item.index[index].value}</span>`,
+        `<span class="map-popup__country"><img class="map-popup__flag" src="${item.flagPath}" alt="flag">${item.countryName}</span>
+        ${item.index[index].name}: <span class="${indexTooltipClass}">${item.index[index].value}</span>`,
       );
       marker.bindTooltip(tooltip);
       marker.addTo(this.map);

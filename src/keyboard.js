@@ -15,7 +15,7 @@ const screenKeyboard = {
     oninput(currentValue) {
       search.setRangeText(currentValue, search.selectionStart, search.selectionEnd, 'end');
       // search.focus();
-      screenKeyboard.properties.viewList.renderCountryList(screenKeyboard.properties.index, screenKeyboard.properties.viewSearch.search.value.toLowerCase());
+      screenKeyboard.properties.viewList.renderList(screenKeyboard.properties.index, screenKeyboard.properties.viewSearch.search.value.toLowerCase());
     },
   },
 

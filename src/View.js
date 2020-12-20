@@ -68,7 +68,6 @@ export default class View {
     );
 
     const viewChart = new ViewChart(
-      this.country,
       this.chart,
     );
 
@@ -134,12 +133,17 @@ export default class View {
     });
 
     //     viewSearch.search.addEventListener('input', () => {
-    //       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
+    //       viewList.renderList(this.index, viewSearch.search.value.toLowerCase());
     //     });
+
+    viewList.subscribe((country, index) => viewTable.renderTable(country, index));
+    viewList.subscribe((country, index) => viewChart.renderChart(country, index));
+    viewMap.subscribe((country, index) => viewTable.renderTable(country, index));
+    viewMap.subscribe((country, index) => viewChart.renderChart(country, index));
 
     viewDate.renderDate(date);
 
-    viewList.renderCountryList(this.index);
+    viewList.renderList(this.index);
 
     viewMap.initialize();
     viewMap.renderMap(this.index);
@@ -148,7 +152,7 @@ export default class View {
     viewTable.renderTable(this.country, this.index);
 
     viewChart.initialize();
-    viewChart.renderChart(this.index);
+    viewChart.renderChart(this.country, this.index);
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');
