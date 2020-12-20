@@ -3,6 +3,7 @@ import List from './List-view';
 import Search from './Search-view';
 import Map from './Map-view';
 import ViewChart from './viewChart-view';
+import ViewDate from './Date-view';
 import Expand from './Expand-view';
 import * as Keyboard from './keyboard';
 import './keyboard.css';
@@ -39,6 +40,11 @@ export default class View {
     this.country = this.getCountry(Math.floor(Math.random() * 195));
     this.index = this.country.index[getIndex()].id;
 
+    // const date = `${decimalize(Math.ceil(Math.random() * 31))}/${decimalize(Math.ceil(Math.random() * 12))}/2020, ${decimalize(Math.floor(Math.random() * 24))}:${decimalize(Math.floor(Math.random() * 60))}:${decimalize(Math.floor(Math.random() * 60))}`;
+
+    // const date = new Date();
+    const date = new Date(Date.parse('Sun Dec 18 2020 05:11:02 GMT+0300 (Москва, стандартное время)'));
+
     const viewList = new List(
       this.data,
       this.list,
@@ -57,6 +63,10 @@ export default class View {
     const viewChart = new ViewChart(
       this.country,
       this.chart,
+    );
+
+    const viewDate = new ViewDate(
+      this.date,
     );
 
     const viewListExpand = new Expand(
@@ -120,6 +130,8 @@ export default class View {
     //       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
     //     });
 
+    viewDate.renderDate(date);
+
     viewList.renderCountryList(this.index);
 
     viewMap.initialize();
@@ -170,4 +182,8 @@ function getIndex() {
     'lastRecoveredPerHundreds',
   ];
   return indexIDs[Math.floor(Math.random() * 12)];
+}
+
+function decimalize(n) {
+  return n < 10 ? `0${n}` : n;
 }
