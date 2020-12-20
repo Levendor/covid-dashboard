@@ -6,7 +6,6 @@ import ViewChart from './viewChart-view';
 import Table from './Table-view';
 import ViewDate from './Date-view';
 import Expand from './Expand-view';
-// import Observer from './Observer';
 import * as Keyboard from './keyboard';
 import './keyboard.css';
 
