@@ -3,6 +3,7 @@ import List from './List-view';
 import Search from './Search-view';
 import Map from './Map-view';
 import ViewChart from './viewChart-view';
+import Table from './Table-view';
 import ViewDate from './Date-view';
 import Expand from './Expand-view';
 import * as Keyboard from './keyboard';
@@ -39,6 +40,8 @@ export default class View {
   initialize() {
     this.country = this.getCountry(Math.floor(Math.random() * 195));
     this.index = this.country.index[getIndex()].id;
+    console.log(this.country);
+    console.log(this.index);
 
     // const date = `${decimalize(Math.ceil(Math.random() * 31))}/${decimalize(Math.ceil(Math.random() * 12))}/2020, ${decimalize(Math.floor(Math.random() * 24))}:${decimalize(Math.floor(Math.random() * 60))}:${decimalize(Math.floor(Math.random() * 60))}`;
 
@@ -58,6 +61,10 @@ export default class View {
     const viewMap = new Map(
       this.data,
       this.map,
+    );
+
+    const viewTable = new Table(
+      this.table,
     );
 
     const viewChart = new ViewChart(
@@ -136,6 +143,9 @@ export default class View {
 
     viewMap.initialize();
     viewMap.renderMap(this.index);
+
+    viewTable.initialize();
+    viewTable.renderTable(this.country, this.index);
 
     viewChart.initialize();
     viewChart.renderChart(this.index);
