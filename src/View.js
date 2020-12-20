@@ -1,6 +1,7 @@
 import countries from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
+import Map from './Map-view';
 import ViewChart from './viewChart-view';
 import Expand from './Expand-view';
 import * as Keyboard from './keyboard';
@@ -20,6 +21,7 @@ export default class View {
     tableExpand,
     chartExpand,
   ) {
+    this.data = countries;
     this.container = container;
     this.list = list;
     this.search = search;
@@ -34,10 +36,11 @@ export default class View {
   }
 
   initialize() {
-    const index = 'totalCases';
+    this.country = this.getCountry(Math.floor(Math.random() * 195));
+    this.index = this.country.index[getIndex()].id;
 
     const viewList = new List(
-      countries,
+      this.data,
       this.list,
     );
 
@@ -46,8 +49,13 @@ export default class View {
       this.list,
     );
 
+    const viewMap = new Map(
+      this.data,
+      this.map,
+    );
+
     const viewChart = new ViewChart(
-      countries,
+      this.country,
       this.chart,
     );
 
@@ -89,6 +97,8 @@ export default class View {
         viewListExpand.elementToCollapse,
         viewTableExpand.elementToCollapse,
       );
+      const resizeEvent = new Event('resize');
+      window.dispatchEvent(resizeEvent);
     });
     viewTableExpand.expandButton.addEventListener('click', () => {
       viewTableExpand.expandCollapseElement(
@@ -106,17 +116,57 @@ export default class View {
       viewChart.resizeChart();
     });
 
-    viewSearch.search.addEventListener('input', () => {
-      // viewList.renderCountryList(index, viewSearch.search.value.toLowerCase());
-    });
+//     viewSearch.search.addEventListener('input', () => {
+//       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
+//     });
 
-    viewList.renderCountryList(index);
+    viewList.renderCountryList(this.index);
 
-    viewChart.renderChart();
-    viewChart.getCountry(Math.floor(Math.random() * 195));
-    viewChart.updateChart();
+    viewMap.initialize();
+    viewMap.renderMap(this.index);
+    
+    viewChart.initialize();
+    viewChart.renderChart(this.index);
 
-
+    [this.list, this.map, this.table, this.chart].forEach((item) => {
+      item.classList.remove('waiting');
+      
     Keyboard.screenKeyboard.init(index,viewSearch,viewList);
   }
+
+  getCountry(index) {
+    return this.data[index];
+  }
+}
+
+function getIndex() {
+  const indexNames = [
+    'Total cases',
+    'Total deaths',
+    'Total recovered',
+    'Cases per 100 thousand',
+    'Deaths per 100 thousand',
+    'Recovered per 100 thousand',
+    'Total cases in the last day',
+    'Total deaths in the last day',
+    'Total recovered in the last day',
+    'Cases per 100 thousand in the last day',
+    'Deaths per 100 thousand in the last day',
+    'Recovered per 100 thousand in the last day',
+  ];
+  const indexIDs = [
+    'totalCases',
+    'totalDeaths',
+    'totalRecovered',
+    'totalCasesPerHundreds',
+    'totalDeathsPerHundreds',
+    'totalRecoveredPerHundreds',
+    'lastCases',
+    'lastDeaths',
+    'lastRecovered',
+    'lastCasesPerHundreds',
+    'lastDeathsPerHundreds',
+    'lastRecoveredPerHundreds',
+  ];
+  return indexIDs[Math.floor(Math.random() * 12)];
 }

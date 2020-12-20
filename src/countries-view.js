@@ -225,18 +225,66 @@ const countries = function generateCountries() {
       coordinates,
       flagPath,
       index: {
-        totalCases,
-        totalDeaths,
-        totalRecovered,
-        totalCasesPerHundreds,
-        totalDeathsPerHundreds,
-        totalRecoveredPerHundreds,
-        lastCases,
-        lastDeaths,
-        lastRecovered,
-        lastCasesPerHundreds,
-        lastDeathsPerHundreds,
-        lastRecoveredPerHundreds,
+        totalCases: {
+          id: 'totalCases',
+          name: 'Total cases',
+          value: totalCases,
+        },
+        totalDeaths: {
+          id: 'totalDeaths',
+          name: 'Total deaths',
+          value: totalDeaths,
+        },
+        totalRecovered: {
+          id: 'totalRecovered',
+          name: 'Total recovered',
+          value: totalRecovered,
+        },
+        totalCasesPerHundreds: {
+          id: 'totalCasesPerHundreds',
+          name: 'Cases per 100 thousand',
+          value: totalCasesPerHundreds,
+        },
+        totalDeathsPerHundreds: {
+          id: 'totalDeathsPerHundreds',
+          name: 'Deaths per 100 thousand',
+          value: totalDeathsPerHundreds,
+        },
+        totalRecoveredPerHundreds: {
+          id: 'totalRecoveredPerHundreds',
+          name: 'Recovered per 100 thousand',
+          value: totalRecoveredPerHundreds,
+        },
+        lastCases: {
+          id: 'lastCases',
+          name: 'Total cases in the last day',
+          value: lastCases,
+        },
+        lastDeaths: {
+          id: 'lastDeaths',
+          name: 'Total deaths in the last day',
+          value: lastDeaths,
+        },
+        lastRecovered: {
+          id: 'lastRecovered',
+          name: 'Total recovered in the last day',
+          value: lastRecovered,
+        },
+        lastCasesPerHundreds: {
+          id: 'lastCasesPerHundreds',
+          name: 'Cases per 100 thousand in the last day',
+          value: lastCasesPerHundreds,
+        },
+        lastDeathsPerHundreds: {
+          id: 'lastDeathsPerHundreds',
+          name: 'Deaths per 100 thousand in the last day',
+          value: lastDeathsPerHundreds,
+        },
+        lastRecoveredPerHundreds: {
+          id: 'lastRecoveredPerHundreds',
+          name: 'Recovered per 100 thousand in the last day',
+          value: lastRecoveredPerHundreds,
+        },
       },
     };
     arr.push(country);

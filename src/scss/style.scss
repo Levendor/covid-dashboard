@@ -2,7 +2,7 @@
 @import "main";
 @import "header";
 @import "footer";
-@import "scrollbar.scss";
+@import "scrollbar";
 
 * {
   box-sizing: border-box;
@@ -29,7 +29,8 @@ body {
 }
 
 .border {
-  background-color: $elementBackgroundColor;
+  // перебить стили leaflet.js
+  background-color: $elementBackgroundColor !important;
   border: 1px solid $borderColor;
 }
 
@@ -54,4 +55,21 @@ body {
 }
 .recovered-digits {
   color: green;
+}
+
+.waiting {
+  background-image: url(../assets/img/loading.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.warning {
+  position: absolute;
+  z-index: 1000;
+  color: white;
+  font-size: 2rem;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }

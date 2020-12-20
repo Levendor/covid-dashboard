@@ -1,6 +1,6 @@
 export default function generateCountry(item, index) {
   const number = document.createElement('span');
-  number.textContent = item.index[index];
+  number.textContent = item.index[index].value;
   number.classList.add('country-list__digits');
 
   if (index.includes('ases')) number.classList.add('cases-digits');
