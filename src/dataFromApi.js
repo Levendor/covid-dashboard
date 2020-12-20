@@ -101,9 +101,9 @@
   
     getDataFromCovidApiTotal() {
       const entries = this.dataGlobalCovidInfo;
-      this.apiDataTotal.push(
+      this.apiDataCountry.push(
         {
-          country: 'total',
+          country: 'Global',
           totalCases: entries.cases,
           totalDeaths: entries.deaths,
           totalRecovery: entries.recovered,
@@ -125,6 +125,7 @@
     getCountries(index) {
       const result = [];
       this.apiDataCountry.forEach((element) => {
+        if(element.iso3){
         result.push(
           {
             countryID: element.iso3, // не уверен в необходимости countyID, возможно, можно только по названию
@@ -138,7 +139,7 @@
             },
           },
         );
-      });
+      }});
       return result;
     }
   
@@ -223,5 +224,7 @@
     console.log(testCovid.getCountries('totalRecovery'));
     console.log(testCovid.getCountry('Belarus', 'per100KRecovery'));
     console.log(testCovid.getCountry('Belarus', 'totalRecovery'));
+    // console.log(testCovid.getCountry('Global', 'per100KRecovery'));
+    // console.log(testCovid.getCountry('Global', 'totalRecovery'));
   }
   
