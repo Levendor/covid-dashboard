@@ -6,13 +6,12 @@ export default class ViewDate {
   renderDate(date) {
     if (Number.isNaN(Date.parse(date))) {
       this.dateBox.textContent = 'not available';
-      this.dateBox.classList.add('cases-digits');
+      this.dateBox.className = 'header__date_date cases-digits';
       return;
     }
 
-    this.dateBox.classList.remove('cases-digits');
-
-    if (new Date() - Date.parse(date) > 172800000) this.dateBox.classList.add('cases-digits');
+    if (new Date() - Date.parse(date) > 172800000) this.dateBox.className = 'header__date_date cases-digits';
+    else this.dateBox.className = 'header__date_date recovered-digits';
 
     const day = date.getDate();
     const month = date.getMonth() + 1;
