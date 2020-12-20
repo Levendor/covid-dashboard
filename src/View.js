@@ -4,6 +4,8 @@ import Search from './Search-view';
 import Map from './Map-view';
 import ViewChart from './viewChart-view';
 import Expand from './Expand-view';
+import * as Keyboard from './keyboard';
+import './keyboard.css';
 
 export default class View {
   constructor(
@@ -114,22 +116,22 @@ export default class View {
       viewChart.resizeChart();
     });
 
-    viewSearch.search.addEventListener('input', () => {
-      viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
-    });
+//     viewSearch.search.addEventListener('input', () => {
+//       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
+//     });
 
     viewList.renderCountryList(this.index);
 
     viewMap.initialize();
     viewMap.renderMap(this.index);
-    // viewMap.legend.addEventListener('click', () => viewMap.showLegend(this.index, this.data));
-
+    
     viewChart.initialize();
     viewChart.renderChart(this.index);
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');
-    });
+      
+    Keyboard.screenKeyboard.init(index,viewSearch,viewList);
   }
 
   getCountry(index) {
