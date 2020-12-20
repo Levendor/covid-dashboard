@@ -10,17 +10,24 @@
   opacity: 1 !important;
 
   padding: 0.5rem 1rem;
-  // height: 7rem;
-  // width: 15rem;
 
   box-shadow: 5px 5px 3px -3px rgba(120,120,120,.3) !important;
   color: $fontColorGray !important;
   background-color: $elementBackgroundColor !important;
   border: 1px solid $borderColor !important;
 
+
   .map-popup__country {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+
+    .map-popup__flag {
+      height: 1.4rem;
+      margin-right: 0.5rem;
+    }
   }
 
   &::before {

@@ -133,15 +133,17 @@ export default class View {
     });
 
     //     viewSearch.search.addEventListener('input', () => {
-    //       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
+    //       viewList.renderList(this.index, viewSearch.search.value.toLowerCase());
     //     });
 
     viewList.subscribe((country, index) => viewTable.renderTable(country, index));
     viewList.subscribe((country, index) => viewChart.renderChart(country, index));
+    viewMap.subscribe((country, index) => viewTable.renderTable(country, index));
+    viewMap.subscribe((country, index) => viewChart.renderChart(country, index));
 
     viewDate.renderDate(date);
 
-    viewList.renderCountryList(this.index);
+    viewList.renderList(this.index);
 
     viewMap.initialize();
     viewMap.renderMap(this.index);
@@ -151,13 +153,6 @@ export default class View {
 
     viewChart.initialize();
     viewChart.renderChart(this.country, this.index);
-
-    // this.list.childNodes.forEach((countryElement) => {
-    //   countryElement.addEventListener('click', () => {
-    //     this.country = this.data.find((item) => item.countryName === countryElement.textContent.match(/[^\d\s]+/)[0]);
-    //     tableObserver.broadcast(this.country, this.index);
-    //   });
-    // });
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');

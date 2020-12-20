@@ -18,7 +18,7 @@ export default class List extends Observer {
       .sort((first, second) => second.index[index].value - first.index[index].value);
   }
 
-  renderCountryList(index, str = '') {
+  renderList(index, str = '') {
     this.list.innerHTML = '';
 
     const fragment = document.createDocumentFragment();
