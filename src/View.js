@@ -6,6 +6,7 @@ import ViewChart from './viewChart-view';
 import Table from './Table-view';
 import ViewDate from './Date-view';
 import Expand from './Expand-view';
+import Observer from './Observer';
 import * as Keyboard from './keyboard';
 import './keyboard.css';
 
@@ -137,8 +138,12 @@ export default class View {
     //       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
     //     });
 
+    const tableObserver = new Observer();
+    tableObserver.subscribe((country, index) => viewTable.renderTable(country, index));
+
     viewDate.renderDate(date);
 
+    viewList.initialize(tableObserver);
     viewList.renderCountryList(this.index);
 
     viewMap.initialize();
@@ -149,6 +154,13 @@ export default class View {
 
     viewChart.initialize();
     viewChart.renderChart(this.index);
+
+    // this.list.childNodes.forEach((countryElement) => {
+    //   countryElement.addEventListener('click', () => {
+    //     this.country = this.data.find((item) => item.countryName === countryElement.textContent.match(/[^\d\s]+/)[0]);
+    //     tableObserver.broadcast(this.country, this.index);
+    //   });
+    // });
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');

@@ -2,6 +2,11 @@ export default class List {
   constructor(countries, listContainer) {
     this.data = countries;
     this.list = listContainer;
+    this.observers = [];
+  }
+
+  initialize(...observers) {
+    this.observers.push(...observers);
   }
 
   filterCountries(str) {
@@ -23,9 +28,14 @@ export default class List {
     const sortedCountriesList = this.sortCountries(index, str);
 
     sortedCountriesList.forEach((item) => {
-      fragment.append(generateListCountry(item, index));
+      const countryElement = generateListCountry(item, index);
+      this.observers.forEach((observer) => {
+        countryElement.addEventListener('click', () => {
+          observer.broadcast(item, index);
+        });
+      });
+      fragment.append(countryElement);
     });
-
     this.list.append(fragment);
   }
 }
@@ -42,10 +52,13 @@ function generateListCountry(item, index) {
   const flag = document.createElement('img');
   flag.src = item.flagPath;
   flag.alt = 'flag';
-  flag.classList.add('county-list-flag');
+  flag.classList.add('country-list__flag');
 
   const text = document.createElement('span');
   text.classList.add('country-list__text');
+  const countryName = document.createElement('span');
+  countryName.classList.add('country-list__text');
+
   text.append(number, ' ', item.countryName);
 
   const country = document.createElement('div');
