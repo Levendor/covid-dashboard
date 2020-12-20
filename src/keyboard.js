@@ -1,8 +1,6 @@
-
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 export { screenKeyboard };
-
 
 const screenKeyboard = {
   elements: {
@@ -10,16 +8,15 @@ const screenKeyboard = {
     keysContainer: null,
     keys: [],
     layouts: [],
-    recognition: null
+    recognition: null,
   },
 
   eventHandlers: {
     oninput(currentValue) {
       search.setRangeText(currentValue, search.selectionStart, search.selectionEnd, 'end');
-      //search.focus();
+      // search.focus();
       screenKeyboard.properties.viewList.renderCountryList(screenKeyboard.properties.index, screenKeyboard.properties.viewSearch.search.value.toLowerCase());
-      return;
-		}
+    },
   },
 
   properties: {
@@ -32,20 +29,18 @@ const screenKeyboard = {
     mute: false,
     selectionDirection: false,
     layoutCounter: 1,
-    index:'',
-    viewSearch:'',
-    viewList:''
+    index: '',
+    viewSearch: '',
+    viewList: '',
   },
 
-  init(index,viewSearch,viewList) {
+  init(index, viewSearch, viewList) {
     this.properties.index = index;
     this.properties.viewSearch = viewSearch;
     this.properties.viewList = viewList;
 
-    console.log(index,viewSearch,viewList);
-
     this.elements.main = document.createElement('div');
-    this.elements.keysContainer = document.createElement("div");
+    this.elements.keysContainer = document.createElement('div');
 
     this.elements.main.classList.add('keyboard', 'keyboard--hidden');
     this.elements.keysContainer.classList.add('keyboard__keys');
@@ -57,7 +52,7 @@ const screenKeyboard = {
     document.body.appendChild(this.elements.main);
 
     document.querySelector('html').addEventListener('click', () => {
-      //search.focus();
+      // search.focus();
     });
     search.addEventListener('click', () => {
       this.open(search.value);
@@ -65,55 +60,53 @@ const screenKeyboard = {
     search.addEventListener('focus', () => {
       this.open(search.value);
     });
-    document.querySelector('.keyboard').setAttribute("onmousedown", "return false");
-		
+    document.querySelector('.keyboard').setAttribute('onmousedown', 'return false');
+
     // this.open(search.value);
   },
 
   createKeys() {
     const fragment = document.createDocumentFragment();
-    
+
     this.elements.layouts[1] = [
-      "\`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
-      "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
-      "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "\'", "enter",
-      "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "\/", "up",
-      "done", "EN", "mic", "space", "mute", "left", "down", "right"
+      '\`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
+      'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
+      'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'enter',
+      'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '\/', 'up',
+      'done', 'EN', 'mic', 'space', 'mute', 'left', 'down', 'right',
     ];
     this.elements.layouts[3] = [
-      "\`", "!", "\@", "\#", "\$", "\%", "\^", "\&", "\*", "\(", "\)", "\_", "\+", "backspace",
-      "tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|",
-      "caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "enter",
-      "shift", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "\?", "up",
-      "done", "EN", "mic", "space", "mute", "left", "down", "right"
+      '\`', '!', '\@', '\#', '\$', '\%', '\^', '\&', '\*', '\(', '\)', '\_', '\+', 'backspace',
+      'tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
+      'caps', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'enter',
+      'shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '\?', 'up',
+      'done', 'EN', 'mic', 'space', 'mute', 'left', 'down', 'right',
     ];
     this.elements.layouts[0] = [
-      "ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
-      "tab", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "\\",
-      "caps", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "enter",
-      "shift", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".", "up",
-      "done", "RU", "mic", "space", "mute", "left", "down", "right"
+      'ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
+      'tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\',
+      'caps', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'enter',
+      'shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'up',
+      'done', 'RU', 'mic', 'space', 'mute', 'left', 'down', 'right',
     ];
     this.elements.layouts[2] = [
-      "Ё", "!", "\"", "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "backspace",
-      "tab", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "\/",
-      "caps", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "enter",
-      "shift", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ",", "up",
-      "done", "RU", "mic", "space", "mute", "left", "down", "right"
+      'Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'backspace',
+      'tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\/',
+      'caps', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'enter',
+      'shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', 'up',
+      'done', 'RU', 'mic', 'space', 'mute', 'left', 'down', 'right',
     ];
     this.elements.layouts[4] = [
-      "Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace",
-      "Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash",
-      "CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter",
-      "ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ArrowUp",
-      "Done", "Lang", "Mic", "Space", "Mute", "ArrowLeft", "ArrowDown", "ArrowRight"
+      'Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
+      'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash',
+      'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
+      'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp',
+      'Done', 'Lang', 'Mic', 'Space', 'Mute', 'ArrowLeft', 'ArrowDown', 'ArrowRight',
     ];
 
-    const createIcon = (iconName) => {
-      return `<i class="material-icons">${iconName}</i>`;
-    };
+    const createIcon = (iconName) => `<i class="material-icons">${iconName}</i>`;
 
-    this.elements.layouts[1].forEach( (key, index) => {
+    this.elements.layouts[1].forEach((key, index) => {
       const keyElement = document.createElement('button');
       const insertLineBreak = ['backspace', '\\', 'enter', 'up'].indexOf(key) !== -1;
 
@@ -136,7 +129,7 @@ const screenKeyboard = {
             this.triggerEvent('oninput');
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'Backspace') {
               e.preventDefault();
               keyElement.click();
@@ -158,7 +151,7 @@ const screenKeyboard = {
             this.triggerEvent('oninput');
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
               e.preventDefault();
               keyElement.click();
@@ -175,17 +168,17 @@ const screenKeyboard = {
           keyElement.innerHTML = createIcon('keyboard_capslock');
           keyElement.addEventListener('click', () => {
             this.toggleCapsLock();
-            //search.focus();
+            // search.focus();
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'CapsLock') {
               e.preventDefault();
               keyElement.click();
               keyElement.classList.add('click');
               setTimeout(() => keyElement.classList.remove('click'), 100);
             }
-          }); 
+          });
           break;
 
         case 'enter':
@@ -200,14 +193,14 @@ const screenKeyboard = {
             this.triggerEvent('oninput');
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
               e.preventDefault();
               keyElement.click();
               keyElement.classList.add('click');
               setTimeout(() => keyElement.classList.remove('click'), 100);
             }
-          }); 
+          });
           break;
 
         case 'shift':
@@ -216,10 +209,10 @@ const screenKeyboard = {
           keyElement.innerHTML = createIcon('keyboard_arrow_up');
           keyElement.addEventListener('click', () => {
             this.toggleShift();
-            //search.focus();
+            // search.focus();
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'Shift') {
               e.preventDefault();
               if (!screenKeyboard.properties.shift) {
@@ -230,7 +223,7 @@ const screenKeyboard = {
             }
           });
 
-          search.addEventListener("keyup", (e) => {
+          search.addEventListener('keyup', (e) => {
             if (e.key === 'Shift') {
               e.preventDefault();
               if (screenKeyboard.properties.shift) {
@@ -248,13 +241,13 @@ const screenKeyboard = {
             this.up();
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowUp') {
               keyElement.click();
               keyElement.classList.add('click');
               setTimeout(() => keyElement.classList.remove('click'), 100);
             }
-          }); 
+          });
           break;
 
         case 'done':
@@ -272,7 +265,7 @@ const screenKeyboard = {
           keyElement.addEventListener('click', (e) => {
             this.properties.language = !this.properties.language;
             this.toggleLanguage(e);
-            //search.focus();
+            // search.focus();
           });
           break;
 
@@ -299,7 +292,7 @@ const screenKeyboard = {
             this.triggerEvent('oninput');
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === ' ') {
               e.preventDefault();
               keyElement.click();
@@ -323,10 +316,10 @@ const screenKeyboard = {
           keyElement.innerHTML = createIcon('arrow_back');
           keyElement.addEventListener('click', () => {
             this.left();
-            //search.focus();
+            // search.focus();
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
               e.preventDefault();
               keyElement.click();
@@ -342,23 +335,23 @@ const screenKeyboard = {
             this.down();
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowDown') {
               keyElement.click();
               keyElement.classList.add('click');
               setTimeout(() => keyElement.classList.remove('click'), 100);
             }
-          }); 
+          });
           break;
 
         case 'right':
           keyElement.innerHTML = createIcon('arrow_forward');
           keyElement.addEventListener('click', () => {
             this.right();
-            //search.focus();
+            // search.focus();
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') {
               e.preventDefault();
               keyElement.click();
@@ -372,7 +365,7 @@ const screenKeyboard = {
           keyElement.textContent = key.toLowerCase();
           keyElement.id = this.elements.layouts[4][index];
 
-          keyElement.addEventListener("click", () => {
+          keyElement.addEventListener('click', () => {
             if (!this.properties.mute) {
               if (this.properties.language) {
                 // defaultENSound.currentTime = 0;
@@ -383,10 +376,10 @@ const screenKeyboard = {
               }
             }
             this.properties.value = keyElement.textContent;
-            this.triggerEvent("oninput");
+            this.triggerEvent('oninput');
           });
 
-          search.addEventListener("keydown", (e) => {
+          search.addEventListener('keydown', (e) => {
             if (e.code === keyElement.id) {
               e.preventDefault();
               keyElement.click();
@@ -399,7 +392,7 @@ const screenKeyboard = {
       fragment.appendChild(keyElement);
 
       if (insertLineBreak) {
-        fragment.appendChild(document.createElement("br"));
+        fragment.appendChild(document.createElement('br'));
       }
     });
 
@@ -407,7 +400,7 @@ const screenKeyboard = {
   },
 
   triggerEvent(handlerName) {
-    if (typeof this.eventHandlers[handlerName] == 'function') {
+    if (typeof this.eventHandlers[handlerName] === 'function') {
       this.eventHandlers[handlerName](this.properties.value);
     }
   },
@@ -418,9 +411,8 @@ const screenKeyboard = {
       // capslockSound.play();
     }
     this.properties.capsLock = !this.properties.capsLock;
-		this.updateKeyboard();
+    this.updateKeyboard();
     caps.classList.toggle('keyboard__key--active', this.properties.capsLock);
-
   },
 
   toggleShift() {
@@ -429,8 +421,8 @@ const screenKeyboard = {
       // shiftSound.play();
     }
     this.properties.shift = !this.properties.shift;
-		this.properties.layoutCounter += this.properties.shift  ? 2 : -2;
-		this.updateKeyboard();
+    this.properties.layoutCounter += this.properties.shift ? 2 : -2;
+    this.updateKeyboard();
     shift.classList.toggle('keyboard__key--active', this.properties.shift);
   },
 
@@ -440,81 +432,75 @@ const screenKeyboard = {
       // langSound.play();
     }
     e.target.innerHTML = this.properties.language ? '<span>EN</span>' : '<span>RU</span>';
-		this.properties.layoutCounter += this.properties.language  ? 1 : -1;
-		this.updateKeyboard();
+    this.properties.layoutCounter += this.properties.language ? 1 : -1;
+    this.updateKeyboard();
   },
-	
-	updateKeyboard() {
-		switch(this.properties.layoutCounter) {
-			case 1:
-				for (let i = 0; i < this.elements.keys.length; i++) {
-					if (this.elements.keys[i].childElementCount === 0) {
-						this.elements.keys[i].textContent = this.properties.capsLock ? this.elements.layouts[1][i].toUpperCase() : this.elements.layouts[1][i].toLowerCase();
-					}
-				}
-				break;
 
-			case 3:
-				for (let i = 0; i < this.elements.keys.length; i++) {
-					if (this.elements.keys[i].childElementCount === 0) {
-						this.elements.keys[i].textContent = !this.properties.capsLock ? this.elements.layouts[3][i].toUpperCase() : this.elements.layouts[3][i].toLowerCase();
-					}
-				}
-				break;
+  updateKeyboard() {
+    switch (this.properties.layoutCounter) {
+      case 1:
+        for (let i = 0; i < this.elements.keys.length; i++) {
+          if (this.elements.keys[i].childElementCount === 0) {
+            this.elements.keys[i].textContent = this.properties.capsLock ? this.elements.layouts[1][i].toUpperCase() : this.elements.layouts[1][i].toLowerCase();
+          }
+        }
+        break;
 
-			case 0:
-				for (let i = 0; i < this.elements.keys.length; i++) {
-					if (this.elements.keys[i].childElementCount === 0) {
-						this.elements.keys[i].textContent = this.properties.capsLock ? this.elements.layouts[0][i].toUpperCase() : this.elements.layouts[0][i].toLowerCase();
-					}
-				}
-				break;
+      case 3:
+        for (let i = 0; i < this.elements.keys.length; i++) {
+          if (this.elements.keys[i].childElementCount === 0) {
+            this.elements.keys[i].textContent = !this.properties.capsLock ? this.elements.layouts[3][i].toUpperCase() : this.elements.layouts[3][i].toLowerCase();
+          }
+        }
+        break;
 
-			case 2:
-				for (let i = 0; i < this.elements.keys.length; i++) {
-					if (this.elements.keys[i].childElementCount === 0) {
-						this.elements.keys[i].textContent = !this.properties.capsLock ? this.elements.layouts[2][i].toUpperCase() : this.elements.layouts[2][i].toLowerCase();
-					}
-				}
-				break;
-		}
+      case 0:
+        for (let i = 0; i < this.elements.keys.length; i++) {
+          if (this.elements.keys[i].childElementCount === 0) {
+            this.elements.keys[i].textContent = this.properties.capsLock ? this.elements.layouts[0][i].toUpperCase() : this.elements.layouts[0][i].toLowerCase();
+          }
+        }
+        break;
+
+      case 2:
+        for (let i = 0; i < this.elements.keys.length; i++) {
+          if (this.elements.keys[i].childElementCount === 0) {
+            this.elements.keys[i].textContent = !this.properties.capsLock ? this.elements.layouts[2][i].toUpperCase() : this.elements.layouts[2][i].toLowerCase();
+          }
+        }
+        break;
+    }
   },
 
   up() {
-    
+
   },
 
   down() {
-    
+
   },
-  
+
   left() {
-    
     if (this.properties.shift) {
       if (search.selectionDirection == 'backward') {
         search.selectionStart--;
-      } else {
-        if (search.selectionStart == search.selectionEnd){
-          search.selectionStart--;
-          search.selectionDirection = 'backward';
-        } else search.selectionEnd--;
-      }
+      } else if (search.selectionStart == search.selectionEnd) {
+        search.selectionStart--;
+        search.selectionDirection = 'backward';
+      } else search.selectionEnd--;
     } else {
       search.selectionStart = --search.selectionEnd;
     }
   },
 
   right() {
-    
     if (this.properties.shift) {
       if (search.selectionDirection == 'forward') {
         search.selectionEnd++;
-      } else {
-        if (search.selectionStart == search.selectionEnd){
-          search.selectionEnd++;
-          search.selectionDirection = 'forward';
-        } else search.selectionStart++;
-      }
+      } else if (search.selectionStart == search.selectionEnd) {
+        search.selectionEnd++;
+        search.selectionDirection = 'forward';
+      } else search.selectionStart++;
     } else {
       search.selectionStart = ++search.selectionEnd;
     }
@@ -532,15 +518,15 @@ const screenKeyboard = {
       this.elements.recognition.lang = this.properties.language ? 'en-US' : 'ru-RU';
       this.elements.recognition.addEventListener('end', this.elements.recognition.start);
       this.elements.recognition.start();
-      this.elements.recognition.addEventListener('result', event => {
+      this.elements.recognition.addEventListener('result', (event) => {
         if (event.results[0].isFinal) {
-          this.properties.value = event.results[event.results.length-1][0].transcript;
+          this.properties.value = event.results[event.results.length - 1][0].transcript;
           this.triggerEvent('oninput');
         }
       });
     } else {
       this.elements.recognition.removeEventListener('end', this.elements.recognition.start);
-      this.elements.recognition.abort()
+      this.elements.recognition.abort();
       this.elements.recognition = null;
     }
   },
@@ -557,15 +543,15 @@ const screenKeyboard = {
     // search.placeholder = 'Start typing';
     this.properties.value = initialValue || '';
     this.elements.main.classList.remove('keyboard--hidden');
-    //search.focus();
+    // search.focus();
   },
 
   close(e) {
-    search.placeholder = 'Click anywhere';
+    // search.placeholder = 'Click anywhere';
     this.properties.value = '';
     this.elements.main.classList.add('keyboard--hidden');
     e.stopPropagation();
-  }
+  },
 };
 
 // window.addEventListener("DOMContentLoaded", function () {

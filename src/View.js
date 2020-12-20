@@ -116,22 +116,23 @@ export default class View {
       viewChart.resizeChart();
     });
 
-//     viewSearch.search.addEventListener('input', () => {
-//       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
-//     });
+    //     viewSearch.search.addEventListener('input', () => {
+    //       viewList.renderCountryList(this.index, viewSearch.search.value.toLowerCase());
+    //     });
 
     viewList.renderCountryList(this.index);
 
     viewMap.initialize();
     viewMap.renderMap(this.index);
-    
+
     viewChart.initialize();
     viewChart.renderChart(this.index);
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');
-      
-    Keyboard.screenKeyboard.init(index,viewSearch,viewList);
+    });
+
+    Keyboard.screenKeyboard.init(this.index, viewSearch, viewList);
   }
 
   getCountry(index) {
