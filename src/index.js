@@ -4,6 +4,7 @@ import View from './View';
 const view = new View(
   container,
   list,
+  globalBox,
   search,
   mapBox,
   table,

@@ -196,7 +196,7 @@ const countriesList = [
   'Zimbabwe.png',
 ];
 
-const countries = function generateCountries() {
+const countriesFunction = function generateCountries() {
   const arr = [];
   for (let i = 0; i < 195; i++) {
     const countryName = countriesList[i].slice(0, -4);
@@ -292,4 +292,76 @@ const countries = function generateCountries() {
   return arr;
 };
 
-export default countries();
+const globalFunction = function generateGlobal() {
+  return {
+    countryName: 'Global',
+    flagPath: './assets/img/flags/Global.png',
+    index: {
+      totalCases: {
+        id: 'totalCases',
+        name: 'Total cases',
+        value: Math.round(10000 + Math.random() * 200000),
+      },
+      totalDeaths: {
+        id: 'totalDeaths',
+        name: 'Total deaths',
+        value: Math.round(1000 + Math.random() * 20000),
+      },
+      totalRecovered: {
+        id: 'totalRecovered',
+        name: 'Total recovered',
+        value: Math.round(10000 + Math.random() * 150000),
+      },
+      totalCasesPerHundreds: {
+        id: 'totalCasesPerHundreds',
+        name: 'Cases per 100 thousand',
+        value: Math.round(10000 + Math.random() * 200000),
+      },
+      totalDeathsPerHundreds: {
+        id: 'totalDeathsPerHundreds',
+        name: 'Deaths per 100 thousand',
+        value: Math.round(1000 + Math.random() * 20000),
+      },
+      totalRecoveredPerHundreds: {
+        id: 'totalRecoveredPerHundreds',
+        name: 'Recovered per 100 thousand',
+        value: Math.round(10000 + Math.random() * 150000),
+      },
+      lastCases: {
+        id: 'lastCases',
+        name: 'Total cases in the last day',
+        value: Math.round(100 + Math.random() * 2000),
+      },
+      lastDeaths: {
+        id: 'lastDeaths',
+        name: 'Total deaths in the last day',
+        value: Math.round(10 + Math.random() * 200),
+      },
+      lastRecovered: {
+        id: 'lastRecovered',
+        name: 'Total recovered in the last day',
+        value: Math.round(100 + Math.random() * 1500),
+      },
+      lastCasesPerHundreds: {
+        id: 'lastCasesPerHundreds',
+        name: 'Cases per 100 thousand in the last day',
+        value: Math.round(100 + Math.random() * 2000),
+      },
+      lastDeathsPerHundreds: {
+        id: 'lastDeathsPerHundreds',
+        name: 'Deaths per 100 thousand in the last day',
+        value: Math.round(10 + Math.random() * 200),
+      },
+      lastRecoveredPerHundreds: {
+        id: 'lastRecoveredPerHundreds',
+        name: 'Recovered per 100 thousand in the last day',
+        value: Math.round(100 + Math.random() * 1500),
+      },
+    },
+  };
+};
+
+const countries = countriesFunction();
+const global = globalFunction();
+
+export { countries, global };

@@ -1,4 +1,4 @@
-import countries from './countries-view';
+import { countries, global } from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
 import Map from './Map-view';
@@ -15,6 +15,7 @@ export default class View {
   constructor(
     container,
     list,
+    globalBox,
     search,
     mapBox,
     table,
@@ -30,8 +31,10 @@ export default class View {
     chartSwitcher,
   ) {
     this.data = countries;
+    this.globalData = global;
     this.container = container;
     this.list = list;
+    this.global = globalBox;
     this.search = search;
     this.map = mapBox;
     this.table = table;
@@ -60,7 +63,9 @@ export default class View {
 
     const viewList = new List(
       this.data,
+      this.globalData,
       this.list,
+      this.global,
     );
 
     const viewSearch = new Search(

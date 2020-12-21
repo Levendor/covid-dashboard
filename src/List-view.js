@@ -1,10 +1,12 @@
 import Observer from './Observer';
 
 export default class List extends Observer {
-  constructor(countries, listContainer) {
+  constructor(countries, global, listContainer, globalBox) {
     super();
     this.data = countries;
+    this.globalData = global;
     this.list = listContainer;
+    this.global = globalBox;
   }
 
   filterCountries(str) {
@@ -20,6 +22,14 @@ export default class List extends Observer {
 
   renderList(index, str = '') {
     this.list.innerHTML = '';
+    this.global.innerHTML = '';
+
+    const globalObject = this.globalData;
+    const global = generateListCountry(globalObject, index);
+    global.addEventListener('click', () => {
+      super.broadcast(globalObject, index);
+    });
+    this.global.append(global);
 
     const fragment = document.createDocumentFragment();
 
@@ -38,27 +48,27 @@ export default class List extends Observer {
 
 function generateListCountry(item, index) {
   const number = document.createElement('span');
-  number.textContent = item.index[index].value;
+  const flag = document.createElement('img');
+  const text = document.createElement('span');
+  const countryName = document.createElement('span');
+  const country = document.createElement('div');
+
   number.classList.add('country-list__digits');
+  flag.classList.add('country-list__flag');
+  text.classList.add('country-list__text');
+  countryName.classList.add('country-list__text');
+  country.classList.add('country-list__item');
+  flag.alt = 'flag';
 
   if (index.includes('ases')) number.classList.add('cases-digits');
   else if (index.includes('eaths')) number.classList.add('deaths-digits');
   else if (index.includes('ecovered')) number.classList.add('recovered-digits');
 
-  const flag = document.createElement('img');
+  number.textContent = item.index[index].value;
+  const countryNameElement = item.countryName;
   flag.src = item.flagPath;
-  flag.alt = 'flag';
-  flag.classList.add('country-list__flag');
 
-  const text = document.createElement('span');
-  text.classList.add('country-list__text');
-  const countryName = document.createElement('span');
-  countryName.classList.add('country-list__text');
-
-  text.append(number, ' ', item.countryName);
-
-  const country = document.createElement('div');
-  country.classList.add('country-list__item');
+  text.append(number, ' ', countryNameElement);
   country.append(text, flag);
 
   return country;
