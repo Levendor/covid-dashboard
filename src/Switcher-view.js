@@ -48,8 +48,21 @@ export default class Switcher extends Observer {
     this.selectionTab = selectionTab;
 
     this.leftArrow.addEventListener('click', () => this.previousIndex(indexBox.textContent));
-    this.indexBox.addEventListener('click', () => this.showHideSelectionTab());
+    this.indexBox.addEventListener('click', (event) => this.showSelectionTab(event));
     this.rightArrow.addEventListener('click', () => this.nextIndex(indexBox.textContent));
+
+    document.addEventListener('click', (event) => this.hideSelectionTab(event));
+  }
+
+  showSelectionTab(event) {
+    this.selectionTab.classList.toggle('switcher__tab-list_active');
+    event.stopPropagation();
+  }
+
+  hideSelectionTab(event) {
+    if (!event.target.closest('.switcher__tab-list')) {
+      this.selectionTab.classList.remove('switcher__tab-list_active');
+    }
   }
 
   renderSwitcher(index) {
@@ -70,10 +83,6 @@ export default class Switcher extends Observer {
     const indexToRender = Object.keys(this.indexes)[previousIndex];
     super.broadcast(indexToRender);
     this.renderSwitcher(indexToRender);
-  }
-
-  showHideSelectionTab() {
-    this.selectionTab.classList.toggle('switcher__tab-list_active');
   }
 }
 
