@@ -211,7 +211,7 @@
     }
   
     getDate() {
-      const date = new Date(this.dataGlobalCovidInfo.updated).toLocaleString('en-GB');
+      const date = new Date(this.dataGlobalCovidInfo.updated);
       return date; // 'dd/mm/yy hh:mm'
     }
   }
