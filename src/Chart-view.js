@@ -98,7 +98,8 @@ export default class ViewChart {
     this.chartBox.append(chartElement);
   }
 
-  renderChart(country, index) {
+  renderChart(index, country) {
+    if (country) this.country = country;
     this.chartConfig.data.datasets[0].data.length = 0;
     this.chartConfig.data.labels.length = 0;
     this.chartConfig.type = getChartType(index);
@@ -116,7 +117,7 @@ export default class ViewChart {
       value += Math.round(-200 + Math.random() * 1000);
       const data = (this.chartConfig.type === 'bar')
         ? Math.round(Math.random() * 100000)
-        : country.index[index].value + value;
+        : this.country.index[index].value + value;
       this.chartConfig.data.datasets[0].data.push(data);
     }
     this.chartConfig.data.labels.push(...arr);

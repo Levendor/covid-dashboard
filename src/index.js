@@ -13,6 +13,10 @@ const view = new View(
   mapExpand,
   tableExpand,
   chartExpand,
+  listSwitcher,
+  mapSwitcher,
+  tableSwitcher,
+  chartSwitcher,
 );
 
 view.initialize();

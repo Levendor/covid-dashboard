@@ -65,9 +65,10 @@ export default class Table {
     this.recovered = recovered;
   }
 
-  renderTable(country, index) {
-    this.tableFlag.style.backgroundImage = `url(${country.flagPath})`;
-    this.tableRegion.textContent = country.countryName;
+  renderTable(index, country) {
+    if (country) this.country = country;
+    this.tableFlag.style.backgroundImage = `url(${this.country.flagPath})`;
+    this.tableRegion.textContent = this.country.countryName;
     this.cases.className = 'cases-digits';
     this.deaths.className = 'deaths-digits';
     this.recovered.className = 'recovered-digits';
@@ -75,26 +76,26 @@ export default class Table {
     if (index.startsWith('total')) {
       if (index.endsWith('Hundreds')) {
         this.tableIndex.textContent = 'Total indexes per 100 thousand';
-        this.cases.textContent = country.index.totalCasesPerHundreds.value;
-        this.deaths.textContent = country.index.totalDeathsPerHundreds.value;
-        this.recovered.textContent = country.index.totalRecoveredPerHundreds.value;
+        this.cases.textContent = this.country.index.totalCasesPerHundreds.value;
+        this.deaths.textContent = this.country.index.totalDeathsPerHundreds.value;
+        this.recovered.textContent = this.country.index.totalRecoveredPerHundreds.value;
       } else {
         this.tableIndex.textContent = 'Total indexes';
-        this.cases.textContent = country.index.totalCases.value;
-        this.deaths.textContent = country.index.totalDeaths.value;
-        this.recovered.textContent = country.index.totalRecovered.value;
+        this.cases.textContent = this.country.index.totalCases.value;
+        this.deaths.textContent = this.country.index.totalDeaths.value;
+        this.recovered.textContent = this.country.index.totalRecovered.value;
       }
     } else if (index.startsWith('last')) {
       if (index.endsWith('Hundreds')) {
         this.tableIndex.textContent = 'Indexes per 100 thousand in the last day';
-        this.cases.textContent = country.index.lastCasesPerHundreds.value;
-        this.deaths.textContent = country.index.lastDeathsPerHundreds.value;
-        this.recovered.textContent = country.index.lastRecoveredPerHundreds.value;
+        this.cases.textContent = this.country.index.lastCasesPerHundreds.value;
+        this.deaths.textContent = this.country.index.lastDeathsPerHundreds.value;
+        this.recovered.textContent = this.country.index.lastRecoveredPerHundreds.value;
       } else {
         this.tableIndex.textContent = 'Indexes per 100 thousand';
-        this.cases.textContent = country.index.lastCases.value;
-        this.deaths.textContent = country.index.lastDeaths.value;
-        this.recovered.textContent = country.index.lastRecovered.value;
+        this.cases.textContent = this.country.index.lastCases.value;
+        this.deaths.textContent = this.country.index.lastDeaths.value;
+        this.recovered.textContent = this.country.index.lastRecovered.value;
       }
     } else {
       this.cases.className = 'cases-digits';

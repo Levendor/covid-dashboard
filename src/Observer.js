@@ -3,8 +3,8 @@ export default class Observer {
     this.observers = [];
   }
 
-  subscribe(fn) {
-    this.observers.push(fn);
+  subscribe(...fn) {
+    this.observers.push(...fn);
   }
 
   unsubscribe(fn) {

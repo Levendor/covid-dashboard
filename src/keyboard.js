@@ -65,6 +65,10 @@ const screenKeyboard = {
     // this.open(search.value);
   },
 
+  getIndex(index) {
+    this.properties.index = index;
+  },
+
   createKeys() {
     const fragment = document.createDocumentFragment();
 
