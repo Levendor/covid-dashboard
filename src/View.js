@@ -7,6 +7,7 @@ import Table from './Table-view';
 import ViewDate from './Date-view';
 import Expand from './Expand-view';
 import Switcher from './Switcher-view';
+import TableSwitcher from './TableSwitcher-view';
 import * as Keyboard from './keyboard';
 import './keyboard.css';
 
@@ -96,6 +97,10 @@ export default class View {
       this.chartSwitcher,
     );
 
+    const viewTableSwitcher = new TableSwitcher(
+      this.tableSwitcher,
+    );
+
     const viewListExpand = new Expand(
       this.container,
       this.listExpand.parentNode,
@@ -163,7 +168,7 @@ export default class View {
     viewList.subscribe((country, index) => viewChart.renderChart(index, country));
     viewMap.subscribe((country, index) => viewTable.renderTable(index, country));
     viewMap.subscribe((country, index) => viewChart.renderChart(index, country));
-    [viewListSwitcher, viewMapSwitcher, viewChartSwitcher]
+    [viewListSwitcher, viewMapSwitcher, viewChartSwitcher, viewTableSwitcher]
       .forEach((switcher) => switcher.subscribe(
         (index) => viewList.renderList(index, viewSearch.search.value.toLowerCase()),
         (index) => viewChart.renderChart(index),
@@ -174,14 +179,22 @@ export default class View {
     viewListSwitcher.subscribe(
       (index) => viewMapSwitcher.renderSwitcher(index),
       (index) => viewChartSwitcher.renderSwitcher(index),
+      (index) => viewTableSwitcher.renderSwitcher(index),
     );
     viewMapSwitcher.subscribe(
       (index) => viewListSwitcher.renderSwitcher(index),
       (index) => viewChartSwitcher.renderSwitcher(index),
+      (index) => viewTableSwitcher.renderSwitcher(index),
     );
     viewChartSwitcher.subscribe(
       (index) => viewListSwitcher.renderSwitcher(index),
       (index) => viewMapSwitcher.renderSwitcher(index),
+      (index) => viewTableSwitcher.renderSwitcher(index),
+    );
+    viewTableSwitcher.subscribe(
+      (index) => viewListSwitcher.renderSwitcher(index),
+      (index) => viewMapSwitcher.renderSwitcher(index),
+      (index) => viewChartSwitcher.renderSwitcher(index),
     );
 
     viewDate.renderDate(date);
@@ -200,6 +213,7 @@ export default class View {
     viewListSwitcher.initialize(this.index);
     viewMapSwitcher.initialize(this.index);
     viewChartSwitcher.initialize(this.index);
+    viewTableSwitcher.initialize(this.index);
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');
