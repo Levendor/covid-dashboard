@@ -22,6 +22,10 @@ export default class View {
     mapExpand,
     tableExpand,
     chartExpand,
+    listSwitcher,
+    mapSwitcher,
+    tableSwitcher,
+    chartSwitcher,
   ) {
     this.data = countries;
     this.container = container;
@@ -35,6 +39,10 @@ export default class View {
     this.mapExpand = mapExpand;
     this.tableExpand = tableExpand;
     this.chartExpand = chartExpand;
+    this.listSwitcher = listSwitcher;
+    this.mapSwitcher = mapSwitcher;
+    this.tableSwitcher = tableSwitcher;
+    this.chartSwitcher = chartSwitcher;
   }
 
   initialize() {

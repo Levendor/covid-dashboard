@@ -61,7 +61,50 @@
     }
   }
 
-  .switcher__text:active ~ .switcher__tab-list {
+  .switcher__tab-list_active {
     display: block;
+  }
+
+  .switcher__tab-list {
+    display: none;
+    position: absolute;
+    top: calc(100% - 3rem);
+    left: 50%;
+    transform: translate(-50%, -100%);
+    z-index: 500;
+
+    width: 25rem;
+
+    border: 1px solid $borderColor;
+
+    .switcher__list {
+      list-style: none;
+      text-align: left;
+      align-items: center;
+
+      font-size: 1.2rem;
+
+      .switcher__list-header {
+        height: 3rem;
+
+        line-height: 3rem;
+        text-indent: 1rem;
+        font-weight: bold;
+        text-align: center;
+        
+        background-color: $elementBackgroundColorLight;
+      }
+
+      .switcher__list-item {
+        height: 3rem;
+
+        line-height: 3rem;
+        text-indent: 1rem;
+
+        background-color: $blackBackground;
+
+        border-top: 1px solid $borderColor;
+      }
+    }
   }
 }
