@@ -24,7 +24,7 @@ export default class Switcher extends Observer {
     selectionTab.className = 'switcher__tab-list';
     const selectionTabList = document.createElement('ul');
     selectionTabList.className = 'switcher__list';
-    for (let i; i < 13; i++) {
+    for (let i = 0; i < 13; i++) {
       const selectionTabListItem = document.createElement('div');
       if (!i) {
         selectionTabListItem.className = 'switcher__list-header';
@@ -34,6 +34,7 @@ export default class Switcher extends Observer {
         selectionTabListItem.textContent = Object.values(this.indexes)[i - 1];
         selectionTabListItem.addEventListener('click', () => this.render(Object.keys(this.indexes)[i - 1]));
       }
+      console.log(selectionTabListItem);
       selectionTabList.append(selectionTabListItem);
     }
     selectionTab.append(selectionTabList);
@@ -43,6 +44,10 @@ export default class Switcher extends Observer {
     this.indexBox = indexBox;
     this.rightArrow = rightArrow;
     this.selectionTab = selectionTab;
+
+    this.leftArrow.addEventListener('click', () => this.previousIndex(indexBox.textContent));
+    this.indexBox.addEventListener('click', () => this.showHideSelectionTab());
+    this.rightArrow.addEventListener('click', () => this.nextIndex(indexBox.textContent));
   }
 
   render(index) {
@@ -50,15 +55,15 @@ export default class Switcher extends Observer {
   }
 
   nextIndex(index) {
-    const currentIndex = Object.keys(this.indexes).indexOf(index);
+    const currentIndex = Object.values(this.indexes).indexOf(index);
     const nextIndex = (currentIndex + 1) % 12;
     const indexToRender = Object.keys(this.indexes)[nextIndex];
     this.render(indexToRender);
   }
 
   previousIndex(index) {
-    const currentIndex = Object.keys(this.indexes).indexOf(index);
-    const previousIndex = (currentIndex - 1) % 12;
+    const currentIndex = Object.values(this.indexes).indexOf(index);
+    const previousIndex = (currentIndex + 11) % 12;
     const indexToRender = Object.keys(this.indexes)[previousIndex];
     this.render(indexToRender);
   }

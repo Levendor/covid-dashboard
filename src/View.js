@@ -6,6 +6,7 @@ import ViewChart from './viewChart-view';
 import Table from './Table-view';
 import ViewDate from './Date-view';
 import Expand from './Expand-view';
+import Switcher from './Switcher-view';
 import * as Keyboard from './keyboard';
 import './keyboard.css';
 
@@ -81,6 +82,10 @@ export default class View {
 
     const viewDate = new ViewDate(
       this.date,
+    );
+
+    const viewListSwitcher = new Switcher(
+      this.listSwitcher,
     );
 
     const viewListExpand = new Expand(
@@ -161,6 +166,8 @@ export default class View {
 
     viewChart.initialize();
     viewChart.renderChart(this.country, this.index);
+
+    viewListSwitcher.initialize();
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');

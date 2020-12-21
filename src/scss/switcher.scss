@@ -61,10 +61,6 @@
     }
   }
 
-  .switcher__tab-list_active {
-    display: block;
-  }
-
   .switcher__tab-list {
     display: none;
     position: absolute;
@@ -104,7 +100,16 @@
         background-color: $blackBackground;
 
         border-top: 1px solid $borderColor;
+
+        &:hover {
+          cursor: pointer;
+          background-color: $elementBackgroundColorLight;
+        }
       }
     }
+  }
+
+  .switcher__tab-list_active {
+    display: block;
   }
 }
