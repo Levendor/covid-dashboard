@@ -361,6 +361,48 @@ const globalFunction = function generateGlobal() {
   };
 };
 
+const tableIndexNames = [
+  'Total indexes',
+  'Indexes per 100 thousand',
+  'Total indexes in the last day',
+  'Indexes per 100 thousand in the last day',
+];
+const tableIndexIDs = [
+  'totalCases',
+  'totalCasesPerHundreds',
+  'lastCases',
+  'lastCasesPerHundreds',
+];
+
+const indexNames = [
+  'Total cases',
+  'Total deaths',
+  'Total recovered',
+  'Cases per 100 thousand',
+  'Deaths per 100 thousand',
+  'Recovered per 100 thousand',
+  'Total cases in the last day',
+  'Total deaths in the last day',
+  'Total recovered in the last day',
+  'Cases per 100 thousand in the last day',
+  'Deaths per 100 thousand in the last day',
+  'Recovered per 100 thousand in the last day',
+];
+const indexIDs = [
+  'totalCases',
+  'totalDeaths',
+  'totalRecovered',
+  'totalCasesPerHundreds',
+  'totalDeathsPerHundreds',
+  'totalRecoveredPerHundreds',
+  'lastCases',
+  'lastDeaths',
+  'lastRecovered',
+  'lastCasesPerHundreds',
+  'lastDeathsPerHundreds',
+  'lastRecoveredPerHundreds',
+];
+
 const countries = countriesFunction();
 const global = globalFunction();
 

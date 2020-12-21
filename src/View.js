@@ -51,12 +51,8 @@ export default class View {
   }
 
   initialize() {
-    this.country = this.getCountry(Math.floor(Math.random() * 195));
-    this.index = this.country.index[getIndex()].id;
-    console.log(this.country);
-    console.log(this.index);
-
-    // const date = `${decimalize(Math.ceil(Math.random() * 31))}/${decimalize(Math.ceil(Math.random() * 12))}/2020, ${decimalize(Math.floor(Math.random() * 24))}:${decimalize(Math.floor(Math.random() * 60))}:${decimalize(Math.floor(Math.random() * 60))}`;
+    this.country = this.globalData;
+    this.index = this.country.index.totalCases.id;
 
     // const date = new Date();
     const date = new Date(Date.parse('Sun Dec 18 2020 05:11:02 GMT+0300 (Москва, стандартное время)'));
@@ -224,44 +220,4 @@ export default class View {
       item.classList.remove('waiting');
     });
   }
-
-  getCountry(index) {
-    return this.data[index];
-  }
-}
-
-function getIndex() {
-  const indexNames = [
-    'Total cases',
-    'Total deaths',
-    'Total recovered',
-    'Cases per 100 thousand',
-    'Deaths per 100 thousand',
-    'Recovered per 100 thousand',
-    'Total cases in the last day',
-    'Total deaths in the last day',
-    'Total recovered in the last day',
-    'Cases per 100 thousand in the last day',
-    'Deaths per 100 thousand in the last day',
-    'Recovered per 100 thousand in the last day',
-  ];
-  const indexIDs = [
-    'totalCases',
-    'totalDeaths',
-    'totalRecovered',
-    'totalCasesPerHundreds',
-    'totalDeathsPerHundreds',
-    'totalRecoveredPerHundreds',
-    'lastCases',
-    'lastDeaths',
-    'lastRecovered',
-    'lastCasesPerHundreds',
-    'lastDeathsPerHundreds',
-    'lastRecoveredPerHundreds',
-  ];
-  return indexIDs[0];
-}
-
-function decimalize(n) {
-  return n < 10 ? `0${n}` : n;
 }

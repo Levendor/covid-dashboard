@@ -48,8 +48,10 @@ export default class TableSwitcher extends Switcher {
     this.selectionTab = selectionTab;
 
     this.leftArrow.addEventListener('click', () => this.previousIndex(indexBox.textContent));
-    this.indexBox.addEventListener('click', () => this.showHideSelectionTab());
+    this.indexBox.addEventListener('click', (event) => this.showSelectionTab(event));
     this.rightArrow.addEventListener('click', () => this.nextIndex(indexBox.textContent));
+
+    document.addEventListener('click', (event) => super.hideSelectionTab(event));
   }
 
   renderSwitcher(index) {
