@@ -7,13 +7,13 @@ export default class Switcher extends Observer {
     this.indexes = getIndexesObject();
   }
 
-  initialize() {
+  initialize(index) {
     const leftArrow = document.createElement('div');
     leftArrow.className = 'switcher__arrow-container_left';
 
     const indexBox = document.createElement('span');
     indexBox.className = 'switcher__text';
-    indexBox.textContent = 'Total cases';
+    indexBox.textContent = this.indexes[index];
 
     const rightArrow = document.createElement('div');
     rightArrow.className = 'switcher__arrow-container_right';
@@ -32,9 +32,11 @@ export default class Switcher extends Observer {
       } else {
         selectionTabListItem.className = 'switcher__list-item';
         selectionTabListItem.textContent = Object.values(this.indexes)[i - 1];
-        selectionTabListItem.addEventListener('click', () => this.render(Object.keys(this.indexes)[i - 1]));
+        selectionTabListItem.addEventListener('click', () => {
+          this.renderSwitcher(Object.keys(this.indexes)[i - 1]);
+          super.broadcast(Object.keys(this.indexes)[i - 1]);
+        });
       }
-      console.log(selectionTabListItem);
       selectionTabList.append(selectionTabListItem);
     }
     selectionTab.append(selectionTabList);
@@ -50,22 +52,24 @@ export default class Switcher extends Observer {
     this.rightArrow.addEventListener('click', () => this.nextIndex(indexBox.textContent));
   }
 
-  render(index) {
+  renderSwitcher(index) {
     this.indexBox.textContent = this.indexes[index];
   }
 
-  nextIndex(index) {
-    const currentIndex = Object.values(this.indexes).indexOf(index);
+  nextIndex(indexName) {
+    const currentIndex = Object.values(this.indexes).indexOf(indexName);
     const nextIndex = (currentIndex + 1) % 12;
     const indexToRender = Object.keys(this.indexes)[nextIndex];
-    this.render(indexToRender);
+    super.broadcast(indexToRender);
+    this.renderSwitcher(indexToRender);
   }
 
-  previousIndex(index) {
-    const currentIndex = Object.values(this.indexes).indexOf(index);
+  previousIndex(indexName) {
+    const currentIndex = Object.values(this.indexes).indexOf(indexName);
     const previousIndex = (currentIndex + 11) % 12;
     const indexToRender = Object.keys(this.indexes)[previousIndex];
-    this.render(indexToRender);
+    super.broadcast(indexToRender);
+    this.renderSwitcher(indexToRender);
   }
 
   showHideSelectionTab() {

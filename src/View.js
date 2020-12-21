@@ -2,7 +2,7 @@ import countries from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
 import Map from './Map-view';
-import ViewChart from './viewChart-view';
+import ViewChart from './Chart-view';
 import Table from './Table-view';
 import ViewDate from './Date-view';
 import Expand from './Expand-view';
@@ -88,6 +88,14 @@ export default class View {
       this.listSwitcher,
     );
 
+    const viewMapSwitcher = new Switcher(
+      this.mapSwitcher,
+    );
+
+    const viewChartSwitcher = new Switcher(
+      this.chartSwitcher,
+    );
+
     const viewListExpand = new Expand(
       this.container,
       this.listExpand.parentNode,
@@ -114,6 +122,8 @@ export default class View {
       this.chartExpand,
       this.chartExpand.parentNode,
     );
+
+    Keyboard.screenKeyboard.init(this.index, viewSearch, viewList);
 
     viewListExpand.expandButton.addEventListener('click', () => {
       viewListExpand.expandCollapseElement(
@@ -149,10 +159,30 @@ export default class View {
     //       viewList.renderList(this.index, viewSearch.search.value.toLowerCase());
     //     });
 
-    viewList.subscribe((country, index) => viewTable.renderTable(country, index));
-    viewList.subscribe((country, index) => viewChart.renderChart(country, index));
-    viewMap.subscribe((country, index) => viewTable.renderTable(country, index));
-    viewMap.subscribe((country, index) => viewChart.renderChart(country, index));
+    viewList.subscribe((country, index) => viewTable.renderTable(index, country));
+    viewList.subscribe((country, index) => viewChart.renderChart(index, country));
+    viewMap.subscribe((country, index) => viewTable.renderTable(index, country));
+    viewMap.subscribe((country, index) => viewChart.renderChart(index, country));
+    [viewListSwitcher, viewMapSwitcher, viewChartSwitcher]
+      .forEach((switcher) => switcher.subscribe(
+        (index) => viewList.renderList(index, viewSearch.search.value.toLowerCase()),
+        (index) => viewChart.renderChart(index),
+        (index) => viewMap.renderMap(index),
+        (index) => viewTable.renderTable(index),
+        (index) => Keyboard.screenKeyboard.getIndex(index),
+      ));
+    viewListSwitcher.subscribe(
+      (index) => viewMapSwitcher.renderSwitcher(index),
+      (index) => viewChartSwitcher.renderSwitcher(index),
+    );
+    viewMapSwitcher.subscribe(
+      (index) => viewListSwitcher.renderSwitcher(index),
+      (index) => viewChartSwitcher.renderSwitcher(index),
+    );
+    viewChartSwitcher.subscribe(
+      (index) => viewListSwitcher.renderSwitcher(index),
+      (index) => viewMapSwitcher.renderSwitcher(index),
+    );
 
     viewDate.renderDate(date);
 
@@ -162,18 +192,18 @@ export default class View {
     viewMap.renderMap(this.index);
 
     viewTable.initialize();
-    viewTable.renderTable(this.country, this.index);
+    viewTable.renderTable(this.index, this.country);
 
     viewChart.initialize();
-    viewChart.renderChart(this.country, this.index);
+    viewChart.renderChart(this.index, this.country);
 
-    viewListSwitcher.initialize();
+    viewListSwitcher.initialize(this.index);
+    viewMapSwitcher.initialize(this.index);
+    viewChartSwitcher.initialize(this.index);
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');
     });
-
-    Keyboard.screenKeyboard.init(this.index, viewSearch, viewList);
   }
 
   getCountry(index) {
@@ -210,7 +240,7 @@ function getIndex() {
     'lastDeathsPerHundreds',
     'lastRecoveredPerHundreds',
   ];
-  return indexIDs[Math.floor(Math.random() * 12)];
+  return indexIDs[0];
 }
 
 function decimalize(n) {
