@@ -72,7 +72,6 @@
         });
 
         historyCovidCountryData[element] = countryTimelineDataHistory;
-
       });
     });
 
@@ -105,6 +104,13 @@ class Covid19Info {
       per100KCasesInLastDay: 'Cases per 100 thousand in the last day',
       per100KDeathInLastDay: 'Deaths per 100 thousand in the last day',
       per100KRecoveryInLastDay: 'Recovered per 100 thousand in the last day',
+    };
+
+    this.dictionaryTable = {
+      totalCases: 'Total indexes',
+      totalCasesPerHundreds: 'Indexes per 100 thousand',
+      lastCases: 'Total indexes in the last day',
+      lastCas: 'Indexes per 100 thousand in the last day',
     };
   }
 
@@ -165,7 +171,7 @@ class Covid19Info {
       if (element.iso3) {
         result.push(
           {
-            countryID: element.iso3, 
+            countryID: element.iso3,
             countryName: element.country,
             countryFlag: element.flag,
             countryCoordinates: element.countryСenterСoordinates,
@@ -236,7 +242,7 @@ class Covid19Info {
             per100KDeathInLastDay: element.per100KDeathInLastDay,
             per100KRecoveryInLastDay: element.per100KRecoveryInLastDay,
           },
-          countryIndexHistory: { 
+          countryIndexHistory: {
             name: this.dictionary[index],
             date: historyDateW[index],
 
@@ -252,20 +258,26 @@ class Covid19Info {
     const date = new Date(this.dataGlobalCovidInfo.updated);
     return date; // 'dd/mm/yy hh:mm'
   }
+
+  get getDictionaryTable() {
+    return this.dictionaryTable;
+  }
+
+  get getDictionary() {
+    return this.dictionary;
+  }
 }
 
 function main(globalCovidInfo, countriesCovidInfo, historyCovidCountryProvinceData, historyCovidGlobalDataN) {
-  //
-  testCovid = new Covid19Info(globalCovidInfo, countriesCovidInfo, historyCovidCountryProvinceData, historyCovidGlobalDataN);
 
-  console.log(testCovid.getDate());
-  console.log(testCovid.getCountries('per100KCases'));
-  console.log(testCovid.getCountry('China', 'totalRecovery'));
+  // testCovid = new Covid19Info(globalCovidInfo, countriesCovidInfo, historyCovidCountryProvinceData, historyCovidGlobalDataN);
+  // console.log(testCovid.getDate());
+  // console.log(testCovid.getCountries('per100KCases'));
+  // console.log(testCovid.getCountry('China', 'totalRecovery'));
   // console.log(testCovid.getCountry('Belarus', 'totalRecovery'));
   // console.log(testCovid.getCountry('Global', 'per100KRecovery'));
   // console.log(testCovid.getCountry('Global', 'totalRecovery'));
-}
-
-function mer(x) {
+  // console.log(testCovid.getDictionaryTable);
+  // console.log(testCovid.getDictionary);
 
 }
