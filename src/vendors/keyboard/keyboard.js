@@ -257,7 +257,7 @@ const screenKeyboard = {
           break;
 
         case 'done':
-          keyElement.classList.add('keyboard__key--wide', 'keyboard__key--dark');
+          keyElement.classList.add('keyboard__key--wide');
           keyElement.innerHTML = createIcon('check_circle');
           keyElement.addEventListener('click', (event) => {
             this.close(event);
@@ -309,8 +309,8 @@ const screenKeyboard = {
           break;
 
         case 'mute':
-          keyElement.classList.add('keyboard__key--wide', 'keyboard__key--activatable', 'keyboard__key--active');
-          keyElement.innerHTML = createIcon('volume_up');
+          keyElement.classList.add('keyboard__key--wide', 'keyboard__key--activatable', 'keyboard__key--dark');
+          keyElement.innerHTML = createIcon('volume_off');
           keyElement.addEventListener('click', () => {
             this.toggleMute();
             keyElement.innerHTML = this.properties.mute ? createIcon('volume_off') : createIcon('volume_up');

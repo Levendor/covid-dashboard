@@ -10,8 +10,6 @@ export default class Map extends Observer {
     this.mapConfig = {
       center: [0, 0],
       zoom: 2,
-      // worldCopyJump: true,
-      // maxBoundsViscosity: 1,
     };
     this.layerSource = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
     this.layerConfig = {
@@ -58,7 +56,7 @@ export default class Map extends Observer {
       const tooltip = new Leaflet.Tooltip(tooltipConfig);
       tooltip.setContent(
         `<span class="map-popup__country"><img class="map-popup__flag" src="${item.flagPath}" alt="flag">${item.countryName}</span>
-        ${item.index.name}: <span class="${indexTooltipClass}">${item.index.value}</span>`,
+        ${item.index.name}: <span class="${indexTooltipClass}">${item.index.value.toLocaleString('ru-RU')}</span>`,
       );
       marker.bindTooltip(tooltip);
       marker.addTo(this.map);
@@ -119,9 +117,9 @@ function getLegendValues(index, array, i) {
   const min = Math.min(...arr);
   const max = Math.max(...arr);
   const step = (max - min) / 10;
-  if (i === 0) return `< ${(min + (i + 1) * step).toFixed(0)}`;
-  if (i === 9) return `> ${(min + (i) * step).toFixed(0)}`;
-  return `${(min + (i) * step).toFixed(0)} - ${(min + (i + 1) * step).toFixed(0)}`;
+  if (i === 0) return `< ${Math.round(min + (i + 1) * step).toLocaleString('ru-RU')}`;
+  if (i === 9) return `> ${Math.round(min + (i) * step).toLocaleString('ru-RU')}`;
+  return `${Math.round(min + (i) * step).toLocaleString('ru-RU')} - ${Math.round(min + (i + 1) * step).toLocaleString('ru-RU')}`;
 }
 
 function getMarkerColor(index) {
