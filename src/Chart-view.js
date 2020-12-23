@@ -53,7 +53,7 @@ export default class ViewChart {
             ticks: {
               maxRotation: 0,
               callback: (value, index) => {
-                if (index % 3 === 2) return value.slice(0, 3);
+                if (index % 3 === 2) return value.slice(0, -3).split('/').reverse().join('/');
                 return null;
               },
             },
