@@ -55,8 +55,6 @@ export default class TableSwitcher extends Switcher {
   }
 
   renderSwitcher(index) {
-    console.log(index);
-
     if (index.startsWith('total')) {
       if (index.endsWith('Hundreds')) {
         this.indexBox.textContent = 'Indexes per 100 thousand';
@@ -70,10 +68,6 @@ export default class TableSwitcher extends Switcher {
         this.indexBox.textContent = 'Total indexes in the last day';
       }
     }
-
-    // if (Object.keys(this.tableIndexes).includes(index)) {
-    //   this.indexBox.textContent = this.tableIndexes[index];
-    // }
   }
 
   nextIndex(indexName) {
