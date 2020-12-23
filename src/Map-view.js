@@ -1,5 +1,6 @@
 import Observer from './Observer';
 import Leaflet from './vendors/leaflet/leaflet';
+import geoJSON from './vendors/leaflet/countries.geo.json';
 import './vendors/leaflet/leaflet.css';
 
 export default class Map extends Observer {
@@ -19,6 +20,11 @@ export default class Map extends Observer {
     this.layer = new Leaflet.TileLayer(this.layerSource, this.layerConfig);
     this.markers = [];
     this.legend = new Leaflet.Control({ position: 'topleft' });
+    this.geoJSONLayerStyle = {
+      color: '#333333',
+      fillColor: 'transparent',
+      weight: 1,
+    };
   }
 
   initialize() {
@@ -29,12 +35,18 @@ export default class Map extends Observer {
   }
 
   renderMap(index, countries) {
+    const geoJSONLayer = new Leaflet.GeoJSON(geoJSON, {
+      style: this.geoJSONLayerStyle,
+      onEachFeature,
+    });
+
     if (countries) this.countries = countries;
     this.legend.onAdd = () => legendOnAdd(index, this.countries);
     this.legend.addTo(this.map);
     this.markers.forEach((item) => item.remove());
     const assignMarkerSize = getMarkerSize(index, this.countries);
     const indexTooltipClass = getIndexClass(index);
+
     this.countries.forEach((item) => {
       const iconConfig = {
         iconUrl: getMarkerColor(index),
@@ -58,10 +70,52 @@ export default class Map extends Observer {
         `<span class="map-popup__country"><img class="map-popup__flag" src="${item.flagPath}" alt="flag">${item.countryName}</span>
         ${item.index.name}: <span class="${indexTooltipClass}">${item.index.value.toLocaleString('ru-RU')}</span>`,
       );
-      marker.bindTooltip(tooltip);
+      // marker.bindTooltip(tooltip);
       marker.addTo(this.map);
       this.markers.push(marker);
     });
+
+    this.geoJSONLayer = geoJSONLayer;
+    this.map.addLayer(this.geoJSONLayer);
+    this.geoJSONLayer.eachLayer((layer) => {
+      const item = this.countries.find((it) => it.countryID === layer.feature.id);
+      if (item) {
+        const { lat, lng } = layer.getCenter();
+        const tooltipConfig = { className: 'map-tooltip' };
+        const tooltip = new Leaflet.Tooltip(tooltipConfig);
+        tooltip.setContent(
+          `<span class="map-popup__country"><img class="map-popup__flag" src="${item.flagPath}" alt="flag">${item.countryName}</span>
+          ${item.index.name}: <span class="${indexTooltipClass}">${item.index.value.toLocaleString('ru-RU')}</span>`,
+        ).setLatLng([lat, lng]);
+        layer.bindTooltip(tooltip);
+        layer.addEventListener('click', () => {
+          super.broadcast(index, item);
+        });
+      }
+    });
+
+    function resetHighlight(event) {
+      geoJSONLayer.resetStyle(event.target);
+    }
+
+    function highlightCountry(event) {
+      const layer = event.target;
+
+      layer.setStyle({
+        fillColor: '#aaaaaa',
+        fillOpacity: 0.5,
+      });
+      if (!Leaflet.Browser.ie && !Leaflet.Browser.opera && !Leaflet.Browser.edge) {
+        layer.bringToFront();
+      }
+    }
+
+    function onEachFeature(feature, layer) {
+      layer.on({
+        mouseover: highlightCountry,
+        mouseout: resetHighlight,
+      });
+    }
   }
 
   showLegend(index, array) {
