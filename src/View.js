@@ -1,4 +1,3 @@
-// import { countries } from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
 import Map from './Map-view';
@@ -8,8 +7,8 @@ import ViewDate from './Date-view';
 import Expand from './Expand-view';
 import Switcher from './Switcher-view';
 import TableSwitcher from './TableSwitcher-view';
-import * as Keyboard from './keyboard';
-import './keyboard.css';
+import * as Keyboard from './vendors/keyboard/keyboard';
+import './vendors/keyboard/keyboard.css';
 
 export default class View {
   constructor(
