@@ -13,7 +13,7 @@ module.exports = {
     publicPath: '',
     path: path.resolve(__dirname, './covid-dashboard'),
     filename: './[name].bundle.js',
-    assetModuleFilename: 'assets/*/[name][ext]',
+    assetModuleFilename: 'assets/[name][ext]',
   },
   devtool: 'inline-source-map',
   devServer: {
