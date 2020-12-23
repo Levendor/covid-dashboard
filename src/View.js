@@ -1,4 +1,4 @@
-import { countries, global } from './countries-view';
+// import { countries } from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
 import Map from './Map-view';
@@ -29,12 +29,11 @@ export default class View {
     mapSwitcher,
     tableSwitcher,
     chartSwitcher,
+    model,
   ) {
-    this.data = countries;
-    this.globalData = global;
     this.container = container;
     this.list = list;
-    this.global = globalBox;
+    this.globalBox = globalBox;
     this.search = search;
     this.map = mapBox;
     this.table = table;
@@ -48,20 +47,20 @@ export default class View {
     this.mapSwitcher = mapSwitcher;
     this.tableSwitcher = tableSwitcher;
     this.chartSwitcher = chartSwitcher;
+    this.model = model;
   }
 
   initialize() {
-    this.country = this.globalData;
-    this.index = this.country.index.totalCases.id;
-
-    // const date = new Date();
-    const date = new Date(Date.parse('Sun Dec 18 2020 05:11:02 GMT+0300 (Москва, стандартное время)'));
+    this.index = 'totalCases';
+    this.countries = this.model.getCountries(this.index);
+    this.global = this.model.getListGlobal(this.index);
+    this.country = this.model.getCountry('Global', this.index);
 
     const viewList = new List(
-      this.data,
-      this.globalData,
-      this.list,
+      this.countries,
       this.global,
+      this.list,
+      this.globalBox,
     );
 
     const viewSearch = new Search(
@@ -70,7 +69,7 @@ export default class View {
     );
 
     const viewMap = new Map(
-      this.data,
+      this.countries,
       this.map,
     );
 
@@ -161,20 +160,35 @@ export default class View {
       viewChart.resizeChart();
     });
 
-    //     viewSearch.search.addEventListener('input', () => {
-    //       viewList.renderList(this.index, viewSearch.search.value.toLowerCase());
-    //     });
-
-    viewList.subscribe((country, index) => viewTable.renderTable(index, country));
-    viewList.subscribe((country, index) => viewChart.renderChart(index, country));
-    viewMap.subscribe((country, index) => viewTable.renderTable(index, country));
-    viewMap.subscribe((country, index) => viewChart.renderChart(index, country));
+    viewList.subscribe((index, country) => viewTable.renderTable(
+      index, this.model.getCountry(country.countryName, index),
+    ));
+    viewList.subscribe((index, country) => viewChart.renderChart(
+      index, this.model.getCountry(country.countryName, index),
+    ));
+    viewMap.subscribe((index, country) => viewTable.renderTable(
+      index, this.model.getCountry(country.countryName, index),
+    ));
+    viewMap.subscribe((index, country) => viewChart.renderChart(
+      index, this.model.getCountry(country.countryName, index),
+    ));
     [viewListSwitcher, viewMapSwitcher, viewChartSwitcher, viewTableSwitcher]
       .forEach((switcher) => switcher.subscribe(
-        (index) => viewList.renderList(index, viewSearch.search.value.toLowerCase()),
-        (index) => viewChart.renderChart(index),
-        (index) => viewMap.renderMap(index),
-        (index) => viewTable.renderTable(index),
+        (index) => {
+          this.index = index;
+          this.countries = this.model.getCountries(index);
+          this.global = this.model.getListGlobal(this.index);
+          this.country = this.model.getCountry(this.country.countryName, index);
+        },
+        (index) => viewList.renderList(
+          index,
+          viewSearch.search.value.toLowerCase(),
+          this.countries,
+          this.global,
+        ),
+        (index) => viewChart.renderChart(index, this.country),
+        (index) => viewMap.renderMap(index, this.countries),
+        (index) => viewTable.renderTable(index, this.country),
         (index) => Keyboard.screenKeyboard.getIndex(index),
       ));
     viewListSwitcher.subscribe(
@@ -198,7 +212,7 @@ export default class View {
       (index) => viewChartSwitcher.renderSwitcher(index),
     );
 
-    viewDate.renderDate(date);
+    viewDate.renderDate(this.model.getDate());
 
     viewList.renderList(this.index);
 
@@ -211,10 +225,10 @@ export default class View {
     viewChart.initialize();
     viewChart.renderChart(this.index, this.country);
 
-    viewListSwitcher.initialize(this.index);
-    viewMapSwitcher.initialize(this.index);
-    viewChartSwitcher.initialize(this.index);
-    viewTableSwitcher.initialize(this.index);
+    viewListSwitcher.initialize(this.index, this.model.getDictionary);
+    viewMapSwitcher.initialize(this.index, this.model.getDictionary);
+    viewChartSwitcher.initialize(this.index, this.model.getDictionary);
+    viewTableSwitcher.initialize(this.index, this.model.getDictionaryTable);
 
     [this.list, this.map, this.table, this.chart].forEach((item) => {
       item.classList.remove('waiting');

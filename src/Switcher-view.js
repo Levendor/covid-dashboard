@@ -4,10 +4,10 @@ export default class Switcher extends Observer {
   constructor(switcher) {
     super();
     this.switcher = switcher;
-    this.indexes = getIndexesObject();
   }
 
-  initialize(index) {
+  initialize(index, dictionary) {
+    this.indexes = dictionary;
     const leftArrow = document.createElement('div');
     leftArrow.className = 'switcher__arrow-container_left';
 

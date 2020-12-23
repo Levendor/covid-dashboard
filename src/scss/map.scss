@@ -51,7 +51,7 @@
   .legend-box {
     display: none;
     flex-direction: column;
-    max-width: 15rem;
+    max-width: 20rem;
     // width: 22rem;
     // height: 41rem;
     border: 1px solid $borderColor;
@@ -154,42 +154,42 @@
 }
 
 .iconSize0 {
-  height: 3.5px;
-  width: 3.5px;
-}
-.iconSize1 {
   height: 5px;
   width: 5px;
 }
-.iconSize2 {
+.iconSize1 {
   height: 6.5px;
   width: 6.5px;
 }
-.iconSize3 {
+.iconSize2 {
   height: 8px;
   width: 8px;
 }
-.iconSize4 {
+.iconSize3 {
   height: 9.5px;
   width: 9.5px;
 }
-.iconSize5 {
+.iconSize4 {
   height: 11px;
   width: 11px;
 }
-.iconSize6 {
+.iconSize5 {
   height: 12.5px;
   width: 12.5px;
 }
-.iconSize7 {
+.iconSize6 {
   height: 14px;
   width: 14px;
 }
-.iconSize8 {
+.iconSize7 {
   height: 15.5px;
   width: 15.5px;
 }
-.iconSize9 {
+.iconSize8 {
   height: 17px;
   width: 17px;
+}
+.iconSize9 {
+  height: 18.5px;
+  width: 18.5px;
 }
