@@ -67,7 +67,7 @@ function generateListCountry(item, index) {
   else if (index.includes('eaths')) number.classList.add('deaths-digits');
   else if (index.includes('ecovered')) number.classList.add('recovered-digits');
 
-  number.textContent = item.index.value;
+  number.textContent = item.index.value.toLocaleString('ru-RU');
   const countryNameElement = item.countryName;
   flag.src = item.flagPath;
 

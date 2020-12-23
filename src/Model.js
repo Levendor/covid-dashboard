@@ -1,90 +1,3 @@
-// (async () => {
-//   let countriesCovidInfo;
-//   let globalCovidInfo;
-//   let historyCovidCountryProvinceData;
-//   const historyCovidCountryData = {};
-//   let historyCovidGlobalData;
-
-//   await fetch('https://disease.sh/v3/covid-19/all')
-//     .then((response) => response.json())
-//     .then((entries) => {
-//       globalCovidInfo = entries;
-//     });
-
-//   await fetch('https://disease.sh/v3/covid-19/countries')
-//     .then((response) => response.json())
-//     .then((entries) => {
-//       countriesCovidInfo = entries;
-//     });
-
-//   await fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=all')
-//     .then((response) => response.json())
-//     .then((entries) => {
-//       historyCovidGlobalData = entries;
-//     });
-
-//   await fetch('https://disease.sh/v3/covid-19/historical?lastdays=all')
-//     .then((response) => response.json())
-//     .then((entries) => {
-//       historyCovidCountryProvinceData = entries;
-//     })
-//     .then(() => {
-//       let country = null;
-//       let i = 0;
-//       const temporaryArrayForCountriesWithProvinces = [];
-//       historyCovidCountryProvinceData.forEach((element) => {
-//         if (!element.province) {
-//           historyCovidCountryData[element.country] = element.timeline;
-//           i = 0;
-//         } else {
-//           i += 1;
-//           temporaryArrayForCountriesWithProvinces.push(element);
-//         }
-//         country = element.country;
-//       });
-//       const countryListArray = [];
-//       temporaryArrayForCountriesWithProvinces.push({ country: '' });
-//       temporaryArrayForCountriesWithProvinces.forEach((element, index, array) => {
-//         if (index < temporaryArrayForCountriesWithProvinces.length - 1
-//             && array[index].country !== array[index + 1].country) {
-//           countryListArray.push(array[index].country);
-//         }
-//       });
-//       countryListArray.forEach((element, index, array) => {
-//         const countryTimelineDataHistory = {
-//           cases: {},
-//           deaths: {},
-//           recovered: {},
-//         };
-//         const timeArrayForCountry = [];
-//         temporaryArrayForCountriesWithProvinces.forEach((elementX, index, array) => {
-//           if (elementX.country === element) {
-//             timeArrayForCountry.push(elementX.timeline);
-//           }
-//         });
-//         const arrayWithDates = Object.keys(timeArrayForCountry[0].cases);
-//         arrayWithDates.forEach((elementY, index, array) => {
-//           const resultCases = timeArrayForCountry.reduce((a, b) => a + b.cases[elementY], 0);
-//           const resultDeaths = timeArrayForCountry.reduce((a, b) => a + b.deaths[elementY], 0);
-//           const resultRecovered = timeArrayForCountry
-//             .reduce((a, b) => a + b.recovered[elementY], 0);
-//           countryTimelineDataHistory.cases[elementY] = resultCases;
-//           countryTimelineDataHistory.deaths[elementY] = resultDeaths;
-//           countryTimelineDataHistory.recovered[elementY] = resultRecovered;
-//         });
-
-//         historyCovidCountryData[element] = countryTimelineDataHistory;
-//       });
-//     });
-
-//   await main(
-//     globalCovidInfo,
-//     countriesCovidInfo,
-//    historyCovidCountryData,
-//    historyCovidGlobalData,
-//  );
-// })();
-
 export default class Model {
   constructor(
     globalCovidInfo,
@@ -184,15 +97,27 @@ export default class Model {
         totalCases: entries.cases,
         totalDeaths: entries.deaths,
         totalRecovered: entries.recovered,
-        totalCasesPerHundreds: Math.round((entries.cases / entries.population) * this.per100кРopulation),
-        totalDeathsPerHundreds: Math.round((entries.deaths / entries.population) * this.per100кРopulation),
-        totalRecoveredPerHundreds: Math.round((entries.recovered / entries.population) * this.per100кРopulation),
+        totalCasesPerHundreds: Math.round(
+          (entries.cases / entries.population) * this.per100кРopulation,
+        ),
+        totalDeathsPerHundreds: Math.round(
+          (entries.deaths / entries.population) * this.per100кРopulation,
+        ),
+        totalRecoveredPerHundreds: Math.round(
+          (entries.recovered / entries.population) * this.per100кРopulation,
+        ),
         lastCases: entries.todayCases,
         lastDeaths: entries.todayDeaths,
         lastRecovered: entries.todayRecovered,
-        lastCasesPerHundreds: Math.round((entries.todayCases / entries.population) * this.per100кРopulation),
-        lastDeathsPerHundreds: Math.round((entries.todayDeaths / entries.population) * this.per100кРopulation),
-        lastRecoveredPerHundreds: Math.round((entries.todayRecovered / entries.population) * this.per100кРopulation),
+        lastCasesPerHundreds: Math.round(
+          (entries.todayCases / entries.population) * this.per100кРopulation,
+        ),
+        lastDeathsPerHundreds: Math.round(
+          (entries.todayDeaths / entries.population) * this.per100кРopulation,
+        ),
+        lastRecoveredPerHundreds: Math.round(
+          (entries.todayRecovered / entries.population) * this.per100кРopulation,
+        ),
       },
     });
   }
@@ -298,6 +223,7 @@ export default class Model {
             }
             return rez;
           })(),
+
           lastDeaths: (() => {
             const dateInArray = Object.keys(element.index.history.deaths);
             const valuesInArray = Object.values(element.index.history.deaths);
@@ -315,6 +241,7 @@ export default class Model {
             }
             return rez;
           })(),
+
           lastRecovered: (() => {
             const dateInArray = Object.keys(element.index.history.recovered);
             const valuesInArray = Object.values(element.index.history.recovered);
@@ -332,6 +259,7 @@ export default class Model {
             }
             return rez;
           })(),
+
           lastCasesPerHundreds: (() => {
             const dateInArray = Object.keys(element.index.history.cases);
             const valuesInArray = Object.values(element.index.history.cases);
@@ -350,6 +278,7 @@ export default class Model {
             }
             return rez;
           })(),
+
           lastDeathsPerHundreds: (() => {
             const dateInArray = Object.keys(element.index.history.deaths);
             const valuesInArray = Object.values(element.index.history.deaths);
@@ -368,6 +297,7 @@ export default class Model {
             }
             return rez;
           })(),
+
           lastRecoveredPerHundreds: (() => {
             const dateInArray = Object.keys(element.index.history.recovered);
             const valuesInArray = Object.values(element.index.history.recovered);

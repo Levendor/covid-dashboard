@@ -1,4 +1,3 @@
-// import { countries } from './countries-view';
 import List from './List-view';
 import Search from './Search-view';
 import Map from './Map-view';
@@ -8,8 +7,8 @@ import ViewDate from './Date-view';
 import Expand from './Expand-view';
 import Switcher from './Switcher-view';
 import TableSwitcher from './TableSwitcher-view';
-import * as Keyboard from './keyboard';
-import './keyboard.css';
+import * as Keyboard from './vendors/keyboard/keyboard';
+import './vendors/keyboard/keyboard.css';
 
 export default class View {
   constructor(
@@ -160,15 +159,21 @@ export default class View {
       viewChart.resizeChart();
     });
 
-    viewList.subscribe((index, country) => viewTable.renderTable(
-      index, this.model.getCountry(country.countryName, index),
-    ));
+    viewList.subscribe((index, country) => {
+      this.country = country;
+      viewTable.renderTable(
+        index, this.model.getCountry(country.countryName, index),
+      );
+    });
     viewList.subscribe((index, country) => viewChart.renderChart(
       index, this.model.getCountry(country.countryName, index),
     ));
-    viewMap.subscribe((index, country) => viewTable.renderTable(
-      index, this.model.getCountry(country.countryName, index),
-    ));
+    viewMap.subscribe((index, country) => {
+      this.country = country;
+      viewTable.renderTable(
+        index, this.model.getCountry(country.countryName, index),
+      );
+    });
     viewMap.subscribe((index, country) => viewChart.renderChart(
       index, this.model.getCountry(country.countryName, index),
     ));

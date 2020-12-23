@@ -15,7 +15,8 @@ const screenKeyboard = {
     oninput(currentValue) {
       search.setRangeText(currentValue, search.selectionStart, search.selectionEnd, 'end');
       // search.focus();
-      screenKeyboard.properties.viewList.renderList(screenKeyboard.properties.index, screenKeyboard.properties.viewSearch.search.value.toLowerCase());
+      screenKeyboard.properties.viewList.renderList(screenKeyboard.properties.index,
+        screenKeyboard.properties.viewSearch.search.value.toLowerCase());
     },
   },
 
@@ -26,7 +27,7 @@ const screenKeyboard = {
     fn: false,
     language: true,
     mic: false,
-    mute: false,
+    mute: true,
     selectionDirection: false,
     layoutCounter: 1,
     index: '',
@@ -128,7 +129,8 @@ const screenKeyboard = {
             }
             if (search.selectionStart == search.selectionEnd) {
               search.selectionStart = 0;
-              this.properties.value = search.value.slice(0, search.selectionEnd).substring(0, search.selectionEnd - 1);
+              this.properties.value = search.value
+                .slice(0, search.selectionEnd).substring(0, search.selectionEnd - 1);
             } else this.properties.value = '';
             this.triggerEvent('oninput');
           });
@@ -255,7 +257,7 @@ const screenKeyboard = {
           break;
 
         case 'done':
-          keyElement.classList.add('keyboard__key--wide', 'keyboard__key--dark');
+          keyElement.classList.add('keyboard__key--wide');
           keyElement.innerHTML = createIcon('check_circle');
           keyElement.addEventListener('click', (event) => {
             this.close(event);
@@ -307,8 +309,8 @@ const screenKeyboard = {
           break;
 
         case 'mute':
-          keyElement.classList.add('keyboard__key--wide', 'keyboard__key--activatable');
-          keyElement.innerHTML = createIcon('volume_up');
+          keyElement.classList.add('keyboard__key--wide', 'keyboard__key--activatable', 'keyboard__key--dark');
+          keyElement.innerHTML = createIcon('volume_off');
           keyElement.addEventListener('click', () => {
             this.toggleMute();
             keyElement.innerHTML = this.properties.mute ? createIcon('volume_off') : createIcon('volume_up');
@@ -445,7 +447,9 @@ const screenKeyboard = {
       case 1:
         for (let i = 0; i < this.elements.keys.length; i++) {
           if (this.elements.keys[i].childElementCount === 0) {
-            this.elements.keys[i].textContent = this.properties.capsLock ? this.elements.layouts[1][i].toUpperCase() : this.elements.layouts[1][i].toLowerCase();
+            this.elements.keys[i].textContent = this.properties.capsLock
+              ? this.elements.layouts[1][i].toUpperCase()
+              : this.elements.layouts[1][i].toLowerCase();
           }
         }
         break;
@@ -453,7 +457,9 @@ const screenKeyboard = {
       case 3:
         for (let i = 0; i < this.elements.keys.length; i++) {
           if (this.elements.keys[i].childElementCount === 0) {
-            this.elements.keys[i].textContent = !this.properties.capsLock ? this.elements.layouts[3][i].toUpperCase() : this.elements.layouts[3][i].toLowerCase();
+            this.elements.keys[i].textContent = !this.properties.capsLock
+              ? this.elements.layouts[3][i].toUpperCase()
+              : this.elements.layouts[3][i].toLowerCase();
           }
         }
         break;
@@ -461,7 +467,9 @@ const screenKeyboard = {
       case 0:
         for (let i = 0; i < this.elements.keys.length; i++) {
           if (this.elements.keys[i].childElementCount === 0) {
-            this.elements.keys[i].textContent = this.properties.capsLock ? this.elements.layouts[0][i].toUpperCase() : this.elements.layouts[0][i].toLowerCase();
+            this.elements.keys[i].textContent = this.properties.capsLock
+              ? this.elements.layouts[0][i].toUpperCase()
+              : this.elements.layouts[0][i].toLowerCase();
           }
         }
         break;
@@ -469,9 +477,14 @@ const screenKeyboard = {
       case 2:
         for (let i = 0; i < this.elements.keys.length; i++) {
           if (this.elements.keys[i].childElementCount === 0) {
-            this.elements.keys[i].textContent = !this.properties.capsLock ? this.elements.layouts[2][i].toUpperCase() : this.elements.layouts[2][i].toLowerCase();
+            this.elements.keys[i].textContent = !this.properties.capsLock
+              ? this.elements.layouts[2][i].toUpperCase()
+              : this.elements.layouts[2][i].toLowerCase();
           }
         }
+        break;
+
+      default:
         break;
     }
   },

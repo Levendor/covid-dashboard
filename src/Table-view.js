@@ -76,26 +76,26 @@ export default class Table {
     if (index.startsWith('total')) {
       if (index.endsWith('Hundreds')) {
         this.tableIndex.textContent = 'Indexes per 100 thousand';
-        this.cases.textContent = this.country.index.totalCasesPerHundreds.value;
-        this.deaths.textContent = this.country.index.totalDeathsPerHundreds.value;
-        this.recovered.textContent = this.country.index.totalRecoveredPerHundreds.value;
+        this.cases.textContent = this.country.index.totalCasesPerHundreds.value.toLocaleString('ru-RU');
+        this.deaths.textContent = this.country.index.totalDeathsPerHundreds.value.toLocaleString('ru-RU');
+        this.recovered.textContent = this.country.index.totalRecoveredPerHundreds.value.toLocaleString('ru-RU');
       } else {
         this.tableIndex.textContent = 'Total indexes';
-        this.cases.textContent = this.country.index.totalCases.value;
-        this.deaths.textContent = this.country.index.totalDeaths.value;
-        this.recovered.textContent = this.country.index.totalRecovered.value;
+        this.cases.textContent = this.country.index.totalCases.value.toLocaleString('ru-RU');
+        this.deaths.textContent = this.country.index.totalDeaths.value.toLocaleString('ru-RU');
+        this.recovered.textContent = this.country.index.totalRecovered.value.toLocaleString('ru-RU');
       }
     } else if (index.startsWith('last')) {
       if (index.endsWith('Hundreds')) {
         this.tableIndex.textContent = 'Indexes per 100 thousand in the last day';
-        this.cases.textContent = this.country.index.lastCasesPerHundreds.value;
-        this.deaths.textContent = this.country.index.lastDeathsPerHundreds.value;
-        this.recovered.textContent = this.country.index.lastRecoveredPerHundreds.value;
+        this.cases.textContent = this.country.index.lastCasesPerHundreds.value.toLocaleString('ru-RU');
+        this.deaths.textContent = this.country.index.lastDeathsPerHundreds.value.toLocaleString('ru-RU');
+        this.recovered.textContent = this.country.index.lastRecoveredPerHundreds.value.toLocaleString('ru-RU');
       } else {
         this.tableIndex.textContent = 'Total indexes in the last day';
-        this.cases.textContent = this.country.index.lastCases.value;
-        this.deaths.textContent = this.country.index.lastDeaths.value;
-        this.recovered.textContent = this.country.index.lastRecovered.value;
+        this.cases.textContent = this.country.index.lastCases.value.toLocaleString('ru-RU');
+        this.deaths.textContent = this.country.index.lastDeaths.value.toLocaleString('ru-RU');
+        this.recovered.textContent = this.country.index.lastRecovered.value.toLocaleString('ru-RU');
       }
     } else {
       this.cases.className = 'cases-digits';
