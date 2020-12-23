@@ -1,44 +1,47 @@
 import Observer from './Observer';
 
 export default class List extends Observer {
-  constructor(countries, global, listContainer, globalBox) {
+  constructor(countries, globalData, listContainer, globalBox) {
     super();
-    this.data = countries;
-    this.globalData = global;
+    this.countries = countries;
+    this.globalData = globalData;
     this.list = listContainer;
-    this.global = globalBox;
+    this.globalBox = globalBox;
   }
 
   filterCountries(str) {
-    return this.data.filter((item) => item.countryName.toLowerCase().startsWith(str));
+    return this.countries.filter((item) => item.countryName.toLowerCase().startsWith(str));
   }
 
-  sortCountries(index, str) {
+  sortCountries(str) {
     const filteredCountriesList = this.filterCountries(str);
 
     return filteredCountriesList
-      .sort((first, second) => second.index[index].value - first.index[index].value);
+      .sort((first, second) => second.index.value - first.index.value);
   }
 
-  renderList(index, str = '') {
+  renderList(index, str = '', countries, globalData) {
     this.list.innerHTML = '';
-    this.global.innerHTML = '';
-
-    const globalObject = this.globalData;
-    const global = generateListCountry(globalObject, index);
-    global.addEventListener('click', () => {
-      super.broadcast(globalObject, index);
-    });
-    this.global.append(global);
+    if (countries) this.countries = countries;
+    if (globalData) this.globalData = globalData;
+    if (str === '') {
+      this.globalBox.innerHTML = '';
+      const globalObject = this.globalData;
+      const global = generateListCountry(globalObject, index);
+      global.addEventListener('click', () => {
+        super.broadcast(index, globalObject);
+      });
+      this.globalBox.append(global);
+    }
 
     const fragment = document.createDocumentFragment();
 
-    const sortedCountriesList = this.sortCountries(index, str);
+    const sortedCountriesList = this.sortCountries(str);
 
     sortedCountriesList.forEach((item) => {
       const countryElement = generateListCountry(item, index);
       countryElement.addEventListener('click', () => {
-        super.broadcast(item, index);
+        super.broadcast(index, item);
       });
       fragment.append(countryElement);
     });
@@ -64,7 +67,7 @@ function generateListCountry(item, index) {
   else if (index.includes('eaths')) number.classList.add('deaths-digits');
   else if (index.includes('ecovered')) number.classList.add('recovered-digits');
 
-  number.textContent = item.index[index].value;
+  number.textContent = item.index.value;
   const countryNameElement = item.countryName;
   flag.src = item.flagPath;
 

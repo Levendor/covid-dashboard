@@ -50,10 +50,10 @@ export default class ViewChart {
               zeroLineWidth: 1.5,
               zeroLineColor: '#bdbdbd',
             },
-            type: 'time',
-            time: {
-              unit: 'month',
-            },
+            // type: 'time',
+            // time: {
+            //   unit: 'month',
+            // },
             ticks: {
               maxRotation: 0,
               callback: (value, index) => {
@@ -104,24 +104,10 @@ export default class ViewChart {
     this.chartConfig.data.labels.length = 0;
     this.chartConfig.type = getChartType(index);
 
-    let value = 0;
-    const arr = [];
-    for (let i = 1; i < 329; i++) {
-      let label = '';
-      do {
-        label = `${Math.ceil(Math.random() * 12)}/${Math.ceil(Math.random() * 30)}/2020`;
-      } while (arr.some((item) => item === label));
-      // arr.push(new Date(label));
-      arr.push(label);
-
-      value += Math.round(-200 + Math.random() * 1000);
-      const data = (this.chartConfig.type === 'bar')
-        ? Math.round(Math.random() * 100000)
-        : this.country.index[index].value + value;
-      this.chartConfig.data.datasets[0].data.push(data);
-    }
-    this.chartConfig.data.labels.push(...arr);
-    // this.chartConfig.data.labels.sort((a, b) => (a > b ? 1 : -1));
+    this.chartConfig.data.datasets[0].data.push(...this.country.index.history.values);
+    // this.chartConfig.data.labels.push(...[...this.country.index.history.dates]
+    //   .map((item) => new Date(item)));
+    this.chartConfig.data.labels.push(...this.country.index.history.dates);
     this.chart.update();
   }
 

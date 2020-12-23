@@ -5,7 +5,7 @@ import './vendors/leaflet/leaflet.css';
 export default class Map extends Observer {
   constructor(countries, mapBox) {
     super();
-    this.data = countries;
+    this.countries = countries;
     this.mapBox = mapBox;
     this.mapConfig = {
       center: [0, 0],
@@ -30,16 +30,17 @@ export default class Map extends Observer {
     this.map.zoomControl.getContainer().classList.add('zoom-control');
   }
 
-  renderMap(index) {
-    this.legend.onAdd = () => legendOnAdd(index, this.data);
+  renderMap(index, countries) {
+    if (countries) this.countries = countries;
+    this.legend.onAdd = () => legendOnAdd(index, this.countries);
     this.legend.addTo(this.map);
     this.markers.forEach((item) => item.remove());
-    const assignMarkerSize = getMarkerSize(index, this.data);
+    const assignMarkerSize = getMarkerSize(index, this.countries);
     const indexTooltipClass = getIndexClass(index);
-    this.data.forEach((item) => {
+    this.countries.forEach((item) => {
       const iconConfig = {
         iconUrl: getMarkerColor(index),
-        className: assignMarkerSize(item.index[index].value),
+        className: assignMarkerSize(item.index.value),
       };
       const icon = new Leaflet.Icon(iconConfig);
       const markerConfig = {
@@ -52,12 +53,12 @@ export default class Map extends Observer {
         className: 'map-tooltip',
       };
       marker.addEventListener('click', () => {
-        super.broadcast(item, index);
+        super.broadcast(index, item);
       });
       const tooltip = new Leaflet.Tooltip(tooltipConfig);
       tooltip.setContent(
         `<span class="map-popup__country"><img class="map-popup__flag" src="${item.flagPath}" alt="flag">${item.countryName}</span>
-        ${item.index[index].name}: <span class="${indexTooltipClass}">${item.index[index].value}</span>`,
+        ${item.index.name}: <span class="${indexTooltipClass}">${item.index.value}</span>`,
       );
       marker.bindTooltip(tooltip);
       marker.addTo(this.map);
@@ -77,7 +78,7 @@ export default class Map extends Observer {
     legendBoxBody.className = 'legend-box-body';
     const legendBoxIndex = document.createElement('span');
     legendBoxIndex.className = 'legend-box-index';
-    legendBoxIndex.textContent = array[0].index[index].name;
+    legendBoxIndex.textContent = array[0].index.name;
     for (let i = 0; i < 10; i++) {
       const legendBoxItem = document.createElement('div');
       legendBoxItem.classList = 'legend-box-item';
@@ -101,7 +102,7 @@ export default class Map extends Observer {
 }
 
 function getMarkerSize(index, array) {
-  const arr = array.map((item) => item.index[index].value).sort((a, b) => a - b);
+  const arr = array.map((item) => item.index.value).sort((a, b) => a - b);
   const min = Math.min(...arr);
   const max = Math.max(...arr);
   const step = (max - min) / 10;
@@ -114,7 +115,7 @@ function getMarkerSize(index, array) {
 }
 
 function getLegendValues(index, array, i) {
-  const arr = array.map((item) => item.index[index].value).sort((a, b) => a - b);
+  const arr = array.map((item) => item.index.value).sort((a, b) => a - b);
   const min = Math.min(...arr);
   const max = Math.max(...arr);
   const step = (max - min) / 10;
@@ -153,7 +154,7 @@ function legendOnAdd(index, array) {
   legendBoxBody.className = 'legend-box-body border';
   const legendBoxIndex = document.createElement('span');
   legendBoxIndex.className = 'legend-box-index';
-  legendBoxIndex.textContent = array[0].index[index].name;
+  legendBoxIndex.textContent = array[0].index.name;
   legendBoxBody.append(legendBoxIndex);
   for (let i = 9; i >= 0; i--) {
     const legendBoxItem = document.createElement('div');
