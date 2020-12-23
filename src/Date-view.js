@@ -28,3 +28,4 @@ export default class ViewDate {
 function decimalize(n) {
   return n < 10 ? `0${n}` : n;
 }
+
