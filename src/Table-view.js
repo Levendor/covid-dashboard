@@ -75,7 +75,7 @@ export default class Table {
 
     if (index.startsWith('total')) {
       if (index.endsWith('Hundreds')) {
-        this.tableIndex.textContent = 'Total indexes per 100 thousand';
+        this.tableIndex.textContent = 'Indexes per 100 thousand';
         this.cases.textContent = this.country.index.totalCasesPerHundreds.value;
         this.deaths.textContent = this.country.index.totalDeathsPerHundreds.value;
         this.recovered.textContent = this.country.index.totalRecoveredPerHundreds.value;
@@ -92,7 +92,7 @@ export default class Table {
         this.deaths.textContent = this.country.index.lastDeathsPerHundreds.value;
         this.recovered.textContent = this.country.index.lastRecoveredPerHundreds.value;
       } else {
-        this.tableIndex.textContent = 'Indexes per 100 thousand';
+        this.tableIndex.textContent = 'Total indexes in the last day';
         this.cases.textContent = this.country.index.lastCases.value;
         this.deaths.textContent = this.country.index.lastDeaths.value;
         this.recovered.textContent = this.country.index.lastRecovered.value;
