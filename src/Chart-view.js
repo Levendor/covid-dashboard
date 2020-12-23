@@ -104,6 +104,13 @@ export default class ViewChart {
     this.chartConfig.data.labels.length = 0;
     this.chartConfig.type = getChartType(index);
 
+
+    this.country.index.history.values[0] = this.country.index.history.values[1];
+    this.country.index.history.values.forEach((element, arrayIndex, array) => {
+      if (element < 0) {
+        array[arrayIndex] = 0;
+      }
+    })
     this.chartConfig.data.datasets[0].data.push(...this.country.index.history.values);
     // this.chartConfig.data.labels.push(...[...this.country.index.history.dates]
     //   .map((item) => new Date(item)));
