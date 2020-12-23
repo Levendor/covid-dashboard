@@ -1,0 +1,65 @@
+.expand {
+  visibility: hidden;
+
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transform: translate(-50%, -50%);
+
+  width: 1.7rem;
+  height: 1.7rem;
+
+  border-radius: 50%;
+  border: 1px solid $borderColor;
+  background-color: $elementBackgroundColorLight;
+
+  background-image: url(../assets/icon/expand.png);
+  background-position: center;
+  background-size: contain;
+
+  z-index: 500;
+
+  &:hover {
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &:active {
+    width: 1.7rem;
+    height: 1.7rem;
+    background-image: url(../assets/icon/collapse.png);
+  }
+}
+
+.expanded {
+  background-image: url(../assets/icon/collapse.png);
+
+  &:active {
+    background-image: url(../assets/icon/expand.png);
+  }
+}
+
+.left-column:hover {
+  .expand {
+  visibility: visible;
+  }
+}
+
+.map-container:hover {
+  .expand {
+  visibility: visible;
+  }
+}
+
+.table-container:hover {
+  .expand {
+  visibility: visible;
+  }
+}
+
+.chart-container:hover {
+  .expand {
+  visibility: visible;
+  }
+}

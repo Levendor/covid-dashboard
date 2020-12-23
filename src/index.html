@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon"
+      href="./assets/icon/favicon.ico" 
+      type="image/x-icon">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>COVID-19 Dashboard</title>
+  </head>
+  <body>
+
+    <header class="header border">
+      <span class="header__text">
+        COVID-19 Dashboard
+      </span>
+      <span id="dateBox" class="header__date">
+        <span class="header__date_text">
+          Last updated at (dd/mm/yyyy):
+        </span>
+        <span id="date" class="header__date_date">
+        </span>
+      </span>
+    </header>
+
+    <main class="main">
+      <div id="container" class="container">
+
+        <div class="left-column">
+          <div id="listExpand" class="expand"></div>
+          <div class="search border">
+            <span class="search__text"><img src="./assets/icon/loupe.png" alt="search-logo"> Search a country</span>
+            <input id="search" class="search__input" placeholder="search" type="text" autocomplete="off">
+          </div>
+
+          <div id="globalBox" class="global border"></div>
+
+          <div class="list-container">
+            <div id="list" class="country-list border waiting"></div>
+            <div id="listSwitcher" class="switcher border"></div>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <div id="mapExpand" class="expand"></div>
+          <div id="mapBox" class="map border waiting"></div>
+          <div id="mapSwitcher" class="switcher border"></div>
+        </div>
+
+        <div class="right-column">
+          <div class="table-container">
+            <div id="tableExpand" class="expand"></div>
+            <div id="table" class="table border waiting"></div>
+            <div id="tableSwitcher" class="switcher border"></div>
+          </div>
+          <div class="chart-container">
+            <div id="chartExpand" class="expand"></div>
+            <div id="chartBox" class="chartBox border waiting"></div>
+            <div id="chartSwitcher" class="switcher border"></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="footer border">
+      <div class="footer_links">
+        <a href="https://github.com/Levendor">
+          <span>[GitHub] Levendor</span>
+        </a>
+        <a href="https://github.com/tav25">
+          <span>[GitHub] Tav25</span>
+        </a>
+      </div>
+      <span class="footer_year">2020</span>
+      <div class="footer_logo">
+        <a href="https://rs.school/js/">
+          <img class="footer_img" src="./assets/icon/rs_school_js.svg" alt="logo">
+        </a>
+      </div>
+    </footer>
+
+  </body>
+</html>
