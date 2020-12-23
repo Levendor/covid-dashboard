@@ -107,6 +107,7 @@ export default class ViewChart {
 
     this.country.index.history.values[0] = this.country.index.history.values[1];
     this.country.index.history.values.forEach((element, arrayIndex, array) => {
+      array[arrayIndex] = array[arrayIndex].toFixed(2);
       if (element < 0) {
         array[arrayIndex] = 0;
       }
