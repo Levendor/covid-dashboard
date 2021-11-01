@@ -1,0 +1,75 @@
+@import "constant";
+@import "main";
+@import "header";
+@import "footer";
+@import "scrollbar";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: $fontColorGray;
+}
+
+body {
+  height: 100vh;
+  min-height: 59.9rem;
+  width: 100%;
+  min-width: 50rem;
+
+  padding: 0.5rem 1rem;
+
+  background-color: $blackBackground;
+}
+
+.border {
+  // перебить стили leaflet.js
+  background-color: $elementBackgroundColor !important;
+  border: 1px solid $borderColor;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.fullScreen {
+  width: 100%;
+  column-gap: 0;
+}
+
+.no-width {
+  min-width: 0;
+}
+
+.cases-digits {
+  color: red;
+}
+.deaths-digits {
+  color: white;
+}
+.recovered-digits {
+  color: green;
+}
+
+.waiting {
+  background-image: url(../assets/img/loading.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.warning {
+  position: absolute;
+  z-index: 1000;
+  color: white;
+  font-size: 2rem;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}

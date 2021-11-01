@@ -1,0 +1,42 @@
+.header {
+  height: 5%;
+  width: 100%;
+  padding: 0 2rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .header__text {
+    font-size: 2rem;
+  }
+
+  .header__date {
+
+    .header__date_text {
+      font-size: 1.8rem;
+    }
+    
+    .header__date_date {
+      font-size: 1.8rem;
+    }
+  }
+}
+  
+@media screen and (max-width: 800px) {
+  .header {
+    .header__date {
+      display: flex;
+      flex-direction: column;
+
+      .header__date_text {
+        font-size: 1.4rem;
+      }
+    
+      .header__date_date {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
